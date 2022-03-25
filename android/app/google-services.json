@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "973847082955",
+    "project_id": "freelancesappmobile",
+    "storage_bucket": "freelancesappmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:973847082955:android:2a70f935ecf7cda457a84e",
+        "android_client_info": {
+          "package_name": "com.freelancesmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "973847082955-4mhcg6pbk63nk7s72c07lnh7nv7c3vej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.freelancesmobile",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "973847082955-2u9eb9dhl9q2sbg5c6jursl5noojgakk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_kJ1JXHqDOtsGExJ-I4L5kA_q83oH7zY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "973847082955-2u9eb9dhl9q2sbg5c6jursl5noojgakk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

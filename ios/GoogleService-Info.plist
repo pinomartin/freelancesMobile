@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>973847082955-crak3u09k3164p9p36jdblkjk7oul9o5.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.973847082955-crak3u09k3164p9p36jdblkjk7oul9o5</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>973847082955-4mhcg6pbk63nk7s72c07lnh7nv7c3vej.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCc94QMAeghTyqjW8pIfsPMTn8TABChk-c</string>
+	<key>GCM_SENDER_ID</key>
+	<string>973847082955</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.FreelancesMobile</string>
+	<key>PROJECT_ID</key>
+	<string>freelancesappmobile</string>
+	<key>STORAGE_BUCKET</key>
+	<string>freelancesappmobile.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:973847082955:ios:1d142fc736ceed3857a84e</string>
+</dict>
+</plist>
