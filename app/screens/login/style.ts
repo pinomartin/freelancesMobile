@@ -24,8 +24,11 @@ export const getStyles = () => {
     login__captionText: {
       fontSize: 12,
       fontWeight: '400',
-      fontFamily: 'opensans-regular',
-      color: '#8F9BB3',
+      // color: '#8F9BB3',
     },
+    login__buttonContainer:{
+      marginVertical: globalPadding * 3,
+      width: '75%'
+    }
   });
 };

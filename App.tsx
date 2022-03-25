@@ -9,22 +9,31 @@
  */
 
 import React from 'react';
-import {AppNavigator, useNavigationPersistence} from './app/navigators';
 import * as storage from './app/utils/storage';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
+import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import Providers from './app/navigation';
 
 const App = () => {
-  const {
-    initialNavigationState,
-    onNavigationStateChange,
-    isRestored: isNavigationStateRestored,
-  } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
+  // const {
+  //   initialNavigationState,
+  //   onNavigationStateChange,
+  //   isRestored: isNavigationStateRestored,
+  // } = useNavigationPersistence(storage, NAVIGATION_PERSISTENCE_KEY);
   return (
-    <AppNavigator
-      initialState={initialNavigationState}
-      onStateChange={onNavigationStateChange}
-    />
+    <ApplicationProvider {...eva} theme={eva.dark}>
+      <IconRegistry icons={EvaIconsPack} />
+      {/* <NavigationContainer
+      ref={navigationRef}
+      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      {...props}>
+      <Screens />
+    </NavigationContainer> */}
+      <Providers />
+    </ApplicationProvider>
   );
 };
 

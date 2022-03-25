@@ -7,10 +7,7 @@ const useLogin = () => {
   const [loginError, setErrorMessage] = useState(errorMessageInitialState);
   const [isLoading, setIsLoading] = useState(false);
 
-  const signInWithEmailAndPassword = (
-    email: string,
-    password: string,
-  ) => {
+  const signInWithEmailAndPassword = (email: string, password: string) => {
     setIsLoading(true);
     auth()
       .signInWithEmailAndPassword(email, password)
@@ -35,6 +32,12 @@ const useLogin = () => {
           setErrorMessage({
             ...loginError,
             passwordError: 'Hubo un problema, intenta más tarde',
+          });
+        }
+        if (error.code === 'auth/user-not-found') {
+          setErrorMessage({
+            ...loginError,
+            passwordError: 'Usuario no encontrado :(',
           });
         }
         setIsLoading(false);
