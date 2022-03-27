@@ -1,37 +1,27 @@
+import {Layout, Spinner} from '@ui-kitten/components';
+import {EvaSize, EvaStatus} from '@ui-kitten/components/devsupport';
 import React from 'react';
-import {
-  ActivityIndicator,
-  StyleProp,
-  StyleSheet,
-  TextStyle,
-  View,
-} from 'react-native';
-// import {getTheme} from '../utils/theme/colors';
+import {StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
 
 interface LoaderProps {
-  containerStyles?: StyleProp<TextStyle>;
-  size?: number | 'small' | 'large';
-  color?: string;
+  containerStyles?: StyleProp<ViewStyle>;
+  size?: EvaSize;
+  color?: EvaStatus;
   loaderStyles?: StyleProp<TextStyle>;
   isFullScreen?: boolean;
 }
 
 const Loader = ({
   containerStyles,
-  loaderStyles,
   size,
-  color = 'red',
+  color,
   isFullScreen = false,
 }: LoaderProps) => {
   return (
-    <View
+    <Layout
       style={[isFullScreen ? styles.loader__container : null, containerStyles]}>
-      <ActivityIndicator
-        size={size}
-        color={color}
-        style={[styles.loader__indicator, loaderStyles]}
-      />
-    </View>
+      <Spinner status={color} size={size} />
+    </Layout>
   );
 };
 

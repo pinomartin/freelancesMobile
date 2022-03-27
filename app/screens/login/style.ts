@@ -11,8 +11,13 @@ export const getStyles = () => {
     login__globalSpacing: {
       paddingHorizontal: globalPadding * 2,
     },
+    login__headerLogosContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      marginBottom: globalPadding * 2,
+    },
     login__inputContainer: {
-      marginVertical: globalPadding,
+      marginVertical: globalPadding * 2,
       alignItems: 'center',
       width: '90%',
     },
@@ -26,9 +31,13 @@ export const getStyles = () => {
       fontWeight: '400',
       // color: '#8F9BB3',
     },
-    login__buttonContainer:{
+    login__buttonContainer: {
       marginVertical: globalPadding * 3,
-      width: '75%'
-    }
+      width: '75%',
+    },
+    login__switchModeButtonContainer: {
+      width: '75%',
+      marginVertical: globalPadding,
+    },
   });
 };

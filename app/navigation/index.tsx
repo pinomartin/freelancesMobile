@@ -88,7 +88,6 @@
 // export {Screens};
 import React from 'react';
 import {AuthProvider} from '../context/AuthContext';
-// import {NavigationProps} from '../../navigators/app-navigator';
 import Router from './Router';
 export default function Providers() {
   return (

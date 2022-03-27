@@ -1,17 +1,23 @@
-import {Button, Icon, Input, Layout, Text} from '@ui-kitten/components';
-import React, {useState, useContext} from 'react';
 import {
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+  Button,
+  Icon,
+  Input,
+  Layout,
+  Text,
+  useTheme,
+} from '@ui-kitten/components';
+import React, {useState, useContext, useRef, useEffect} from 'react';
+import {Animated, TouchableWithoutFeedback, View} from 'react-native';
 import Loader from '../../components/Loader';
 import {AuthContext} from '../../context/AuthContext';
 import {getStyles} from './style';
+import AppLogo from '../../components/AppLogo';
+import PaperPlaneLogo from '../../components/PaperPlaneLogo';
 
 const LoginScreen = () => {
   const styles = getStyles();
+  const colors = useTheme();
+
   const {login, register, isLoading, registerError, loginError} =
     useContext(AuthContext);
   const [email, setEmail] = useState('');
@@ -19,12 +25,31 @@ const LoginScreen = () => {
   const [secureTextEntry, setSecureTextEntry] = React.useState(true);
   const [isRegisterMode, setIsRegisterMode] = useState(false);
 
+  const disabledButtonHandler = () => {
+    if (email && pass) {
+      return false;
+    }
+    return true;
+  };
+
+  const scale = useRef(new Animated.Value(0.7)).current;
+
+  const bounceIn = () => {
+    Animated.timing(scale, {
+      toValue: 1,
+      duration: 3000,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  useEffect(() => {
+    bounceIn();
+    return () => {};
+  }, []);
+
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
-
-  console.log(email)
-  console.log(pass)
 
   const renderIcon = (props: any) => (
     <TouchableWithoutFeedback onPress={toggleSecureEntry}>
@@ -36,33 +61,54 @@ const LoginScreen = () => {
     return (
       <View style={styles.login__captionContainer}>
         <Text style={styles.login__captionText}>
-          {captionLabel ? captionLabel : 'Debe contar con 8 caracteres minimo.'}
+          {captionLabel ? captionLabel : 'Debe contar con 8 caracteres o más.'}
         </Text>
       </View>
     );
   };
 
   return isLoading ? (
-    <Loader
-      containerStyles={styles.login__container}
-      color={'transparent'}
-      size={30}
-    />
+    <Loader isFullScreen color={'primary'} size={'medium'} />
   ) : (
-    <Layout style={[styles.login__container, styles.login__globalSpacing]}>
+    <Layout
+      style={[styles.login__container, styles.login__globalSpacing]}
+      level={'3'}>
+      <Animated.View
+        style={[
+          styles.login__headerLogosContainer,
+          {transform: [{scale: scale}]},
+        ]}>
+        <AppLogo color={colors['color-primary-default']} />
+        <PaperPlaneLogo
+          width={50}
+          height={50}
+          borderColor={colors['color-info-default']}
+          containerStyles={{
+            alignSelf: 'center',
+            marginTop: '3%',
+            paddingRight: 8,
+          }}
+        />
+      </Animated.View>
       <View style={styles.login__inputContainer}>
-        {/* <Text style={styles.login__inp} category="s1">Login</Text> */}
         <Input
+          textStyle={{fontSize: 16}}
           label={'Email'}
           autoCapitalize={'none'}
           caption={
             isRegisterMode ? registerError.emailError : loginError.emailError
           }
-          // keyboardType="default"
+          selectionColor={colors['color-primary-600']}
           onChangeText={email => setEmail(email)}
           value={email}
           placeholder={'nombre@ejemplo.com'}
           autoCorrect={false}
+          size={'large'}
+          status={
+            registerError.emailError || loginError.emailError
+              ? 'danger'
+              : 'basic'
+          }
         />
       </View>
       <View style={styles.login__inputContainer}>
@@ -77,27 +123,37 @@ const LoginScreen = () => {
           placeholder={'************'}
           secureTextEntry={secureTextEntry}
           onChangeText={pass => setPass(pass)}
+          size={'large'}
+          status={
+            registerError.passwordError || loginError.passwordError
+              ? 'danger'
+              : 'basic'
+          }
         />
       </View>
       <View style={styles.login__buttonContainer}>
         {isRegisterMode ? (
           <Button
             status={'info'}
+            size={'large'}
             style={{}}
+            disabled={disabledButtonHandler()}
             onPress={() => register(email, pass, () => {})}>
-            Registrate!
+            Comerzar!
           </Button>
         ) : (
           <Button
-            status={'info'}
-            style={{}}
+            status={'primary'}
+            size={'large'}
+            disabled={disabledButtonHandler()}
             onPress={() => login(email, pass, () => {})}>
-            Iniciar Sesion
+            Iniciar Sesión
           </Button>
         )}
-
+      </View>
+      <View style={styles.login__switchModeButtonContainer}>
         <Button
-          style={{}}
+          size={'large'}
           appearance="ghost"
           onPress={() => setIsRegisterMode(!isRegisterMode)}>
           {isRegisterMode ? 'Ya tengo cuenta' : 'Registrate'}

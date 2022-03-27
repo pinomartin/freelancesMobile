@@ -1,11 +1,15 @@
 import auth from '@react-native-firebase/auth';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 const useLogin = () => {
   const errorMessageInitialState = {emailError: '', passwordError: ''};
 
   const [loginError, setErrorMessage] = useState(errorMessageInitialState);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setErrorMessage(errorMessageInitialState);
+  }, []);
 
   const signInWithEmailAndPassword = (email: string, password: string) => {
     setIsLoading(true);

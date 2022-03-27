@@ -29,11 +29,10 @@ export default function Router() {
   }, []);
 
   if (loading) {
-    return <Loader size={30} isFullScreen />;
+    return <Loader size={'large'} isFullScreen />;
   }
   return (
-    <NavigationContainer
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationContainer>
       {user ? <HomeStack /> : <AuthStack />}
     </NavigationContainer>
   );
