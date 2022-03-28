@@ -9,4 +9,5 @@ export interface HomeNavigationProps<RouteName extends keyof HomeRoutes> {
 export type HomeRoutes = {
   login: undefined;
   home: undefined;
+  profile: undefined;
 };

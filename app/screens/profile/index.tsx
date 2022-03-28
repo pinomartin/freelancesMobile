@@ -1,42 +1,41 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import {Layout, useTheme} from '@ui-kitten/components';
 import React, {useContext, useLayoutEffect} from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
-import {AppBarProps} from '../../components/AppBar';
-import TimerFree from '../../components/Timers/TimerFreelances';
+import {
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  useColorScheme,
+} from 'react-native';
+import AppBar, {
+  AppBarProps,
+  RightActionsMenuProps,
+} from '../../components/AppBar';
 import {AuthContext} from '../../context/AuthContext';
 import {HomeNavigationProps} from '../../navigation/interface';
-import {PROFILE} from '../../navigation/routes';
 import {getStyles} from './style';
 
-const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
-  const colors = useTheme();
+const ProfileScreen = ({navigation, route}: HomeNavigationProps<'profile'>) => {
+  const isDarkMode = useColorScheme() === 'dark';
   const styles = getStyles();
+  const colors = useTheme();
   const {logout} = useContext(AuthContext);
 
-  const appBarRightMenu = {
+  const appBarRightMenu: RightActionsMenuProps = {
     onPressSecondListItem: () => logout(),
-    onPressFirstListItem: () => navigation.push(PROFILE),
-    firstListItemLabel: 'Mi Perfil',
-    firstListItemIconName: 'person-outline',
+    onPressFirstListItem: () => {
+      navigation.pop();
+    },
+    firstListItemLabel: 'Home',
+    firstListItemIconName: 'home-outline',
     secondListItemLabel: 'Cerrar Sesión',
     secondListItemIconName: 'log-out',
   };
 
   const appBarOptions: AppBarProps = {
-    title: 'Freelances',
+    title: 'Mi perfil',
     alignment: 'start',
     rightMenu: true,
-    customStyle: {backgroundColor: colors['$color-basic-100']},
+    onLeftAccesoryPress: () => navigation.goBack(),
     renderRightActionsProps: appBarRightMenu,
   };
 
@@ -55,7 +54,6 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
           contentContainerStyle={styles.home__scrollView}>
           <Layout style={styles.home__container} level={'2'}>
             {/* <Text>Hola</Text> */}
-            <TimerFree />
             {/* <TimerBackground /> */}
           </Layout>
         </ScrollView>
@@ -64,4 +62,4 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   );
 };
 
-export default Home;
+export default ProfileScreen;

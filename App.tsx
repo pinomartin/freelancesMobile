@@ -10,7 +10,7 @@
 
 import React from 'react';
 
-import * as storage from './app/utils/storage';
+// import * as storage from './app/utils/storage';
 
 export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
@@ -30,8 +30,8 @@ const App = () => {
   return (
     <ApplicationProvider
       {...eva}
-      theme={true ? eva.dark : eva.light}>
-      {/* theme={colorScheme === 'dark' ? eva.dark : eva.light}> */}
+      // theme={true ? eva.dark : eva.light}>
+      theme={colorScheme === 'dark' ? eva.dark : eva.light}>
       <IconRegistry icons={EvaIconsPack} />
       {/* <NavigationContainer
       ref={navigationRef}

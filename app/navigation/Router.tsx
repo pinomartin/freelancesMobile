@@ -9,11 +9,12 @@ import AuthStack from './stacks/AuthStack';
 import HomeStack from './stacks/HomeStack';
 import {AuthContext} from '../context/AuthContext';
 import Loader from '../components/Loader';
-import {useColorScheme} from 'react-native';
 
-export default function Router() {
+interface NavigationProps
+  extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
+
+export default function Router(props: NavigationProps) {
   const {user, setUser} = useContext(AuthContext);
-  const colorScheme = useColorScheme();
   const [loading, setLoading] = useState(true);
   const [initializing, setInitializing] = useState(true);
   // Handle user state changes
@@ -32,7 +33,7 @@ export default function Router() {
     return <Loader size={'large'} isFullScreen />;
   }
   return (
-    <NavigationContainer>
+    <NavigationContainer {...props}>
       {user ? <HomeStack /> : <AuthStack />}
     </NavigationContainer>
   );
