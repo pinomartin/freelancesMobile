@@ -8,7 +8,7 @@
  * @format
  */
 
-import {Layout, Text, useTheme} from '@ui-kitten/components';
+import {Layout, useTheme} from '@ui-kitten/components';
 import React, {useContext} from 'react';
 import {
   SafeAreaView,
@@ -17,7 +17,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import AppBar, {RightActionsMenuProps} from '../../components/AppBar';
-
+import TimerFree from '../../components/Timers/TimerFreelances';
 import {AuthContext} from '../../context/AuthContext';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {getStyles} from './style';
@@ -52,7 +52,9 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.home__scrollView}>
           <Layout style={styles.home__container} level={'2'}>
-            <Text>Hola</Text>
+            {/* <Text>Hola</Text> */}
+            <TimerFree />
+            {/* <TimerBackground /> */}
           </Layout>
         </ScrollView>
       </SafeAreaView>

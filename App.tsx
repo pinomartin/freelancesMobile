@@ -30,8 +30,8 @@ const App = () => {
   return (
     <ApplicationProvider
       {...eva}
-      // theme={true ? eva.dark : eva.light}>
-      theme={colorScheme === 'dark' ? eva.dark : eva.light}>
+      theme={true ? eva.dark : eva.light}>
+      {/* theme={colorScheme === 'dark' ? eva.dark : eva.light}> */}
       <IconRegistry icons={EvaIconsPack} />
       {/* <NavigationContainer
       ref={navigationRef}

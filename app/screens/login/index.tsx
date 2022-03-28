@@ -7,7 +7,12 @@ import {
   useTheme,
 } from '@ui-kitten/components';
 import React, {useState, useContext, useRef, useEffect} from 'react';
-import {Animated, TouchableWithoutFeedback, View} from 'react-native';
+import {
+  Animated,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import Loader from '../../components/Loader';
 import {AuthContext} from '../../context/AuthContext';
 import {getStyles} from './style';
@@ -70,96 +75,98 @@ const LoginScreen = () => {
   return isLoading ? (
     <Loader isFullScreen color={'primary'} size={'medium'} />
   ) : (
-    <Layout
-      style={[styles.login__container, styles.login__globalSpacing]}
-      level={'3'}>
-      <Animated.View
-        style={[
-          styles.login__headerLogosContainer,
-          {transform: [{scale: scale}]},
-        ]}>
-        <AppLogo color={colors['color-primary-default']} />
-        <PaperPlaneLogo
-          width={50}
-          height={50}
-          borderColor={colors['color-info-default']}
-          containerStyles={{
-            alignSelf: 'center',
-            marginTop: '3%',
-            paddingRight: 8,
-          }}
-        />
-      </Animated.View>
-      <View style={styles.login__inputContainer}>
-        <Input
-          textStyle={{fontSize: 16}}
-          label={'Email'}
-          autoCapitalize={'none'}
-          caption={
-            isRegisterMode ? registerError.emailError : loginError.emailError
-          }
-          selectionColor={colors['color-primary-600']}
-          onChangeText={email => setEmail(email)}
-          value={email}
-          placeholder={'nombre@ejemplo.com'}
-          autoCorrect={false}
-          size={'large'}
-          status={
-            registerError.emailError || loginError.emailError
-              ? 'danger'
-              : 'basic'
-          }
-        />
-      </View>
-      <View style={styles.login__inputContainer}>
-        <Input
-          caption={renderCaption(
-            isRegisterMode
-              ? registerError.passwordError
-              : loginError.passwordError,
+    <ScrollView contentContainerStyle={{flex: 1}}>
+      <Layout
+        style={[styles.login__container, styles.login__globalSpacing]}
+        level={'3'}>
+        <Animated.View
+          style={[
+            styles.login__headerLogosContainer,
+            {transform: [{scale: scale}]},
+          ]}>
+          <AppLogo color={colors['color-primary-default']} />
+          <PaperPlaneLogo
+            width={50}
+            height={50}
+            borderColor={colors['color-info-default']}
+            containerStyles={{
+              alignSelf: 'center',
+              marginTop: '3%',
+              paddingRight: 8,
+            }}
+          />
+        </Animated.View>
+        <View style={styles.login__inputContainer}>
+          <Input
+            textStyle={{fontSize: 16}}
+            label={'Email'}
+            autoCapitalize={'none'}
+            caption={
+              isRegisterMode ? registerError.emailError : loginError.emailError
+            }
+            selectionColor={colors['color-primary-600']}
+            onChangeText={email => setEmail(email)}
+            value={email}
+            placeholder={'nombre@ejemplo.com'}
+            autoCorrect={false}
+            size={'large'}
+            status={
+              registerError.emailError || loginError.emailError
+                ? 'danger'
+                : 'basic'
+            }
+          />
+        </View>
+        <View style={styles.login__inputContainer}>
+          <Input
+            caption={renderCaption(
+              isRegisterMode
+                ? registerError.passwordError
+                : loginError.passwordError,
+            )}
+            accessoryRight={renderIcon}
+            label={'Contraseña'}
+            placeholder={'************'}
+            secureTextEntry={secureTextEntry}
+            onChangeText={pass => setPass(pass)}
+            size={'large'}
+            status={
+              registerError.passwordError || loginError.passwordError
+                ? 'danger'
+                : 'basic'
+            }
+          />
+        </View>
+        <View style={styles.login__buttonContainer}>
+          {isRegisterMode ? (
+            <Button
+              status={'info'}
+              size={'large'}
+              style={{}}
+              disabled={disabledButtonHandler()}
+              onPress={() => register(email, pass, () => {})}>
+              Comerzar!
+            </Button>
+          ) : (
+            <Button
+              status={'primary'}
+              size={'large'}
+              disabled={disabledButtonHandler()}
+              onPress={() => login(email, pass, () => {})}>
+              Iniciar Sesión
+            </Button>
           )}
-          accessoryRight={renderIcon}
-          label={'Contraseña'}
-          placeholder={'************'}
-          secureTextEntry={secureTextEntry}
-          onChangeText={pass => setPass(pass)}
-          size={'large'}
-          status={
-            registerError.passwordError || loginError.passwordError
-              ? 'danger'
-              : 'basic'
-          }
-        />
-      </View>
-      <View style={styles.login__buttonContainer}>
-        {isRegisterMode ? (
+        </View>
+        <View style={styles.login__switchModeButtonContainer}>
           <Button
-            status={'info'}
             size={'large'}
-            style={{}}
-            disabled={disabledButtonHandler()}
-            onPress={() => register(email, pass, () => {})}>
-            Comerzar!
+            appearance="ghost"
+            onPress={() => setIsRegisterMode(!isRegisterMode)}>
+            {isRegisterMode ? 'Ya tengo cuenta' : 'Registrate'}
           </Button>
-        ) : (
-          <Button
-            status={'primary'}
-            size={'large'}
-            disabled={disabledButtonHandler()}
-            onPress={() => login(email, pass, () => {})}>
-            Iniciar Sesión
-          </Button>
-        )}
-      </View>
-      <View style={styles.login__switchModeButtonContainer}>
-        <Button
-          size={'large'}
-          appearance="ghost"
-          onPress={() => setIsRegisterMode(!isRegisterMode)}>
-          {isRegisterMode ? 'Ya tengo cuenta' : 'Registrate'}
-        </Button>
-      </View>
-    </Layout>
+        </View>
+      </Layout>
+    </ScrollView>
   );
 };
 
