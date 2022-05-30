@@ -48,7 +48,7 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   }, [navigation, route]);
 
   return (
-    <Layout style={styles.home__mainContainer} level={'4'}>
+    <Layout style={styles.home__mainContainer} level={'2'}>
       <SafeAreaView style={styles.home__safeAreaView}>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"

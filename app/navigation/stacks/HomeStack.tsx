@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../../screens/home';
-import {PROFILE} from '../routes';
+import {HOME, PROFILE} from '../routes';
 import ProfileScreen from '../../screens/profile';
 import {StatusBar, useColorScheme} from 'react-native';
 import AppBar from '../../components/AppBar';
@@ -31,7 +31,7 @@ export default function HomeStack() {
       screenOptions={{
         header: getAppBar,
       }}>
-      <Stack.Screen name="home" component={HomeScreen} />
+      <Stack.Screen name={HOME} component={HomeScreen} />
       <Stack.Screen name={PROFILE} component={ProfileScreen} />
     </Stack.Navigator>
   );

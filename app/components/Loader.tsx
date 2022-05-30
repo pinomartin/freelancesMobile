@@ -1,7 +1,7 @@
 import {Layout, Spinner} from '@ui-kitten/components';
 import {EvaSize, EvaStatus} from '@ui-kitten/components/devsupport';
 import React from 'react';
-import {StyleProp, StyleSheet, TextStyle, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
 interface LoaderProps {
   containerStyles?: StyleProp<ViewStyle>;
