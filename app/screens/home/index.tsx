@@ -8,28 +8,32 @@
  * @format
  */
 
-import {Layout, useTheme} from '@ui-kitten/components';
+import {Button, Icon, Layout, Text, useTheme} from '@ui-kitten/components';
 import React, {useContext, useLayoutEffect} from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
-import TimerFree from '../../components/Timers/TimerFreelances';
+import {CustomCard} from '../../components/CustomCard/CustomCard';
+import TimerFreelances from '../../components/Timers/TimerFreelances';
 import {AuthContext} from '../../context/AuthContext';
 import {HomeNavigationProps} from '../../navigation/interface';
-import {PROFILE} from '../../navigation/routes';
+import {NEW_PROJECT, PROFILE, TIMER} from '../../navigation/routes';
 import {getStyles} from './style';
 
 const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
-  const {logout} = useContext(AuthContext);
+  const {logout, user} = useContext(AuthContext);
 
   const appBarRightMenu = {
-    onPressSecondListItem: () => logout(),
+    onPressThirdListItem: () => logout(),
+    onPressSecondListItem: () => navigation.push(TIMER),
     onPressFirstListItem: () => navigation.push(PROFILE),
     firstListItemLabel: 'Mi Perfil',
     firstListItemIconName: 'person-outline',
-    secondListItemLabel: 'Cerrar Sesión',
-    secondListItemIconName: 'log-out',
+    secondListItemLabel: 'Tiempos',
+    thirdListItemLabel: 'Cerrar Sesión',
+    secondListItemIconName: 'clock-outline',
+    thirdListItemIconName: 'log-out',
   };
 
   const appBarOptions: AppBarProps = {
@@ -54,11 +58,41 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.home__scrollView}>
           <Layout style={styles.home__container} level={'2'}>
-            {/* <Text>Hola</Text> */}
-            <TimerFree />
-            {/* <TimerBackground /> */}
+            <Text style={styles.home__globalSpacing}>
+              <Text category={'h6'}>Bienvenido</Text>{' '}
+              <Text category={'p1'}>{user?.email ? user?.email : ''} 👋</Text>
+            </Text>
+            <View style={styles.home__globalSpacing}>
+              <CustomCard
+                headerTitle="Wolfcox"
+                headerSubtitle="Desarrollo web"
+                withHeader
+                label={
+                  'loren ipsum loren ipsum loren ipsumloren ipsum loren ipsum loren ipsum loren ipsum'
+                }
+                withFooter
+                primaryButtonLabel="Ver"
+                onPressPrimary={() => {}}
+              />
+            </View>
           </Layout>
         </ScrollView>
+        <View style={styles.home__fabButton__container}>
+          <Button
+            status="info"
+            size={'giant'}
+            style={{
+              borderRadius: 80,
+              paddingVertical: 20,
+              paddingHorizontal: 8,
+              // shadowColor: 'blue',
+              // shadowOpacity: 1,
+              // shadowOffset: {width: 1, height: 0},
+            }}
+            onPress={() => navigation.navigate(NEW_PROJECT)}
+            accessoryLeft={<Icon name="plus-outline" />}
+          />
+        </View>
       </SafeAreaView>
     </Layout>
   );

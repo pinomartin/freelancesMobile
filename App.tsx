@@ -33,12 +33,6 @@ const App = () => {
       // theme={true ? eva.dark : eva.light}>
       theme={colorScheme === 'dark' ? eva.dark : eva.light}>
       <IconRegistry icons={EvaIconsPack} />
-      {/* <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
-      {...props}>
-      <Screens />
-    </NavigationContainer> */}
       <Providers />
     </ApplicationProvider>
   );

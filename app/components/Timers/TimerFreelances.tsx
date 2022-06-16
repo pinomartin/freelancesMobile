@@ -3,7 +3,7 @@ import React, {useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import TimerBackground from './TimerBackground';
 
-const TimerFree = () => {
+const TimerFreelances = () => {
   const timerRef = useRef(null);
   const [hasStartButtonPressed, setHasStartButtonPressed] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
@@ -84,7 +84,7 @@ const TimerFree = () => {
   );
 };
 
-export default TimerFree;
+export default TimerFreelances;
 
 const globalSpacing = 8;
 const styles = StyleSheet.create({

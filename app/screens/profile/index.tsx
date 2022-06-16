@@ -31,7 +31,7 @@ const ProfileScreen = ({navigation, route}: HomeNavigationProps<'profile'>) => {
   const appBarRightMenu: RightActionsMenuProps = {
     onPressSecondListItem: () => logout(),
     onPressFirstListItem: () => {
-      navigation.pop();
+      navigation.popToTop();
     },
     firstListItemLabel: 'Home',
     firstListItemIconName: 'home-outline',

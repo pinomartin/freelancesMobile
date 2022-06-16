@@ -10,4 +10,6 @@ export type HomeRoutes = {
   login: undefined;
   home: undefined;
   profile: undefined;
+  timer: undefined;
+  newProject: undefined
 };

@@ -16,10 +16,13 @@ export interface RightActionsMenuProps {
   extraRightIconName?: string;
   onPressFirstListItem?: () => void;
   onPressSecondListItem?: () => void;
+  onPressThirdListItem?: () => void;
   firstListItemLabel?: string;
   firstListItemIconName?: string;
   secondListItemLabel?: string;
   secondListItemIconName?: string;
+  thirdListItemLabel?: string;
+  thirdListItemIconName?: string;
   isMenuVisible?: boolean;
 }
 
@@ -74,6 +77,9 @@ const AppBar = ({
     secondListItemLabel,
     secondListItemIconName,
     onPressSecondListItem,
+    thirdListItemIconName,
+    onPressThirdListItem,
+    thirdListItemLabel,
   }: RightActionsMenuProps) => (
     <>
       {extraRightIconName ? (
@@ -103,6 +109,18 @@ const AppBar = ({
           onPressOut={toggleMenu}
           onPress={onPressSecondListItem}
         />
+        {thirdListItemIconName && thirdListItemLabel ? (
+          <MenuItem
+            accessoryLeft={
+              thirdListItemIconName ? (
+                <Icon name={thirdListItemIconName} />
+              ) : undefined
+            }
+            title={thirdListItemLabel}
+            onPressOut={toggleMenu}
+            onPress={onPressThirdListItem}
+          />
+        ) : (<></>)}
       </OverflowMenu>
     </>
   );

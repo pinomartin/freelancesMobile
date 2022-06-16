@@ -14,17 +14,11 @@ export const getStyles = () => {
     },
     home__container: {
       flex: 1,
-      marginVertical: globalPadding + 4,
+      justifyContent: 'center',
       alignItems: 'center',
     },
     home__globalSpacing: {
       paddingHorizontal: globalPadding * 2,
-      marginVertical: globalPadding * 2,
-    },
-    home__fabButton__container: {
-      position: 'absolute',
-      bottom: globalPadding * 6,
-      right: globalPadding * 2,
     },
   });
 };
