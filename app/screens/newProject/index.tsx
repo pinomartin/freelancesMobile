@@ -18,6 +18,11 @@ import {AuthContext} from '../../context/AuthContext';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {getStyles} from './style';
 
+enum PROJECT_BUDGET_TYPE {
+  HOUR = 'HOUR',
+  TOTAL = 'TOTAL',
+}
+
 const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
@@ -51,6 +56,18 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
         </Text>
       </View>
     );
+  };
+
+  const typeBudgetHandler = () => {
+    switch (projectType) {
+      case 0:
+        return 'Defines un precio por hora y cantidad de horas estimadas de trabajo.';
+
+      case 1:
+        return 'Defines un precio total presupuestado y una fecha estimada de entrega.';
+      default:
+        return '';
+    }
   };
 
   return (
@@ -113,13 +130,17 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 style={{flexDirection: 'row', justifyContent: 'space-around'}}
                 selectedIndex={projectType}
                 onChange={(index: number) => setProjectType(index)}>
-                <Radio status={'info'}>Por Hora</Radio>
-                <Radio status={'info'}>Presupuesto Total</Radio>
+                <Radio status={'info'}>Por Hora 🕰️</Radio>
+                <Radio status={'info'}>Monto Total 💵</Radio>
               </RadioGroup>
-              <Text category={'p2'}>
-                {' '}
-                *******TODO: Descripcion de cada tipo de proyecto....
-              </Text>
+              <View style={styles.newProject__input__container}>
+                <Text
+                  category={'p2'}
+                  status={'basic'}
+                  style={styles.newProject__centerAlignment}>
+                  {`*${typeBudgetHandler()}*`}
+                </Text>
+              </View>
             </View>
           </Layout>
         </ScrollView>

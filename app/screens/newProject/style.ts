@@ -19,6 +19,10 @@ export const getStyles = () => {
     newProject__globalSpacing: {
       paddingHorizontal: globalPadding * 2,
     },
+    newProject__centerAlignment: {
+      alignSelf: 'center',
+      textAlign: 'center',
+    },
     newProject__submitButton__container: {
       marginBottom: globalPadding,
     },
@@ -32,12 +36,12 @@ export const getStyles = () => {
       marginTop: globalPadding,
     },
     captionIcon: {
-      width: 10,
-      height: 10,
+      width: globalPadding + 2,
+      height: globalPadding + 2,
       marginRight: 5,
     },
     captionText: {
-      fontSize: 12,
+      fontSize: globalPadding + 4,
       fontWeight: '400',
       color: '#8F9BB3',
     },
