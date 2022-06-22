@@ -9,20 +9,22 @@
  */
 
 import {Button, Icon, Layout, Text, useTheme} from '@ui-kitten/components';
-import React, {useContext, useLayoutEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
 import {CustomCard} from '../../components/CustomCard/CustomCard';
-import TimerFreelances from '../../components/Timers/TimerFreelances';
-import {AuthContext} from '../../context/AuthContext';
+import Loader from '../../components/Loader';
+// import TimerFreelances from '../../components/Timers/TimerFreelances';
+// import {AuthContext} from '../../context/AuthContext';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {NEW_PROJECT, PROFILE, TIMER} from '../../navigation/routes';
 import {getStyles} from './style';
+import useHome from './useHome';
 
 const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
-  const {logout, user} = useContext(AuthContext);
+  const {logout, user, projects, isLoading} = useHome();
 
   const appBarRightMenu = {
     onPressThirdListItem: () => logout(),
@@ -51,7 +53,9 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
     });
   }, [navigation, route]);
 
-  return (
+  return isLoading ? (
+    <Loader isFullScreen />
+  ) : (
     <Layout style={styles.home__mainContainer} level={'2'}>
       <SafeAreaView style={styles.home__safeAreaView}>
         <ScrollView
@@ -63,17 +67,19 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
               <Text category={'p1'}>{user?.email ? user?.email : ''} 👋</Text>
             </Text>
             <View style={styles.home__globalSpacing}>
-              <CustomCard
-                headerTitle="Wolfcox"
-                headerSubtitle="Desarrollo web"
-                withHeader
-                label={
-                  'loren ipsum loren ipsum loren ipsumloren ipsum loren ipsum loren ipsum loren ipsum'
-                }
-                withFooter
-                primaryButtonLabel="Ver"
-                onPressPrimary={() => {}}
-              />
+              {projects &&
+                projects.map(project => (
+                  <CustomCard
+                    key={project.uid}
+                    headerTitle={project.name}
+                    headerSubtitle={project.client}
+                    withHeader
+                    label={project.description}
+                    withFooter
+                    primaryButtonLabel="Ver más"
+                    onPressPrimary={() => {}}
+                  />
+                ))}
             </View>
           </Layout>
         </ScrollView>

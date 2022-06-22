@@ -7,13 +7,21 @@ export const getStyles = (theme?: string) => {
     headerContainer: {
       marginVertical: globalPadding,
       paddingHorizontal: globalPadding * 2,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    header__rightText__container: {
+      height: 20,
+      width: '15%',
+      alignSelf: 'flex-end',
+      backgroundColor: 'red',
     },
     topContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
     card: {
-      // flex: 1,
+      minWidth: '90%',
       marginVertical: 2,
     },
     footerContainer: {

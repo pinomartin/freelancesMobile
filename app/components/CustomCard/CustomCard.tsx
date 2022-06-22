@@ -1,19 +1,14 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {
-  Button,
-  Card,
-  CardProps,
-  Icon,
-  Layout,
-  Text,
-} from '@ui-kitten/components';
+import {StyleProp, View, ViewStyle} from 'react-native';
+import {Button, Card, Text} from '@ui-kitten/components';
 import {getStyles} from './styles';
+import {EvaStatus} from '@ui-kitten/components/devsupport/typings';
 
 interface Props {
   label: string;
   headerTitle: string;
   headerSubtitle?: string;
+  headerRightText?: string;
   primaryButtonLabel?: string;
   secondaryButtonLabel?: string;
   onPressPrimary?: () => void;
@@ -22,27 +17,37 @@ interface Props {
   customFooterStyle?: StyleProp<ViewStyle>;
   withFooter?: boolean;
   withHeader?: boolean;
+  status?: EvaStatus;
 }
 
 export const CustomCard = ({
   headerTitle,
+  headerSubtitle,
+  headerRightText,
   label,
   customStyle,
   customFooterStyle,
-  headerSubtitle,
   onPressPrimary,
   onPressSecondary,
   primaryButtonLabel,
   secondaryButtonLabel,
   withFooter,
   withHeader,
+  status,
 }: Props) => {
   const styles = getStyles();
 
   const Header = () => (
     <View style={styles.headerContainer}>
-      <Text category="h6">{headerTitle}</Text>
-      {headerSubtitle ? <Text category="s1">{headerSubtitle}</Text> : null}
+      <View>
+        <Text category="h6">{headerTitle}</Text>
+        {headerSubtitle ? <Text category="s1">{headerSubtitle}</Text> : null}
+      </View>
+      {headerRightText ? (
+        <View style={styles.header__rightText__container}>
+          <Text>{headerRightText}</Text>
+        </View>
+      ) : null}
     </View>
   );
 
@@ -70,13 +75,12 @@ export const CustomCard = ({
   );
 
   return (
-    <React.Fragment>
-      <Card
-        style={[styles.card, customStyle]}
-        header={withHeader ? Header : undefined}
-        footer={withFooter ? Footer : undefined}>
-        <Text>{label}</Text>
-      </Card>
-    </React.Fragment>
+    <Card
+      style={[styles.card, customStyle]}
+      header={withHeader ? Header : undefined}
+      footer={withFooter ? Footer : undefined}
+      status={status}>
+      <Text>{label}</Text>
+    </Card>
   );
 };
