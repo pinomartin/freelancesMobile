@@ -55,8 +55,8 @@ const AppBar = ({
   const isDarkMode = useColorScheme() === 'dark';
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const ICON__FILL__COLOR = colors['color-info-600'];
-  const VERTICALPOINTSICON__FILL__COLOR = colors['color-info-900'];
+  const ICON__FILL__COLOR = colors['color-info-500'];
+  const VERTICALPOINTSICON__FILL__COLOR = colors['color-info-500'];
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);

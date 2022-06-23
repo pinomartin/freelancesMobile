@@ -13,6 +13,7 @@ import React, {useLayoutEffect} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
 import {CustomCard} from '../../components/CustomCard/CustomCard';
+import EmptyState from '../../components/EmptyState/EmptyState';
 import Loader from '../../components/Loader';
 import {deleteProject} from '../../firebase/firestore/methods/setters/project';
 import {HomeNavigationProps} from '../../navigation/interface';
@@ -66,7 +67,7 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
               <Text category={'p1'}>{user?.email ? user?.email : ''} 👋</Text>
             </Text>
             <View style={styles.home__globalSpacing}>
-              {projects &&
+              {projects && projects.length > 0 ? (
                 projects.map(project => (
                   <CustomCard
                     key={project.uid}
@@ -80,7 +81,13 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
                     onPressSecondary={() => deleteProject(project!.uid!)}
                     secondaryButtonLabel="Eliminar"
                   />
-                ))}
+                ))
+              ) : (
+                <EmptyState
+                  title="Aún no tienes proyectos"
+                  description="Comenzá creando uno nuevo pulsando sobre el botón + sobre el costado inferior derecho."
+                />
+              )}
             </View>
           </Layout>
         </ScrollView>
