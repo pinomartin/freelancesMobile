@@ -1,6 +1,9 @@
 import {useContext, useEffect, useState} from 'react';
 import {AuthContext} from '../../context/AuthContext';
-import {getProjectsFromUser} from '../../firebase/firestore/getData';
+import {
+  // getProjectsFromUser,
+  getProjectsOnRealTime,
+} from '../../firebase/firestore/methods/getters/getData';
 import {ProjectDTO} from '../../interfaces/Project';
 
 const useHome = () => {
@@ -8,23 +11,32 @@ const useHome = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {logout, user} = useContext(AuthContext);
 
-  const getUserProjects = async () => {
-    setIsLoading(true);
-    const response = await getProjectsFromUser(user!.email!);
-    if (response.kind !== 'ok') {
-      setProjects([]);
-      setIsLoading(false);
-    }
-    setProjects(response.data);
-    setIsLoading(false);
-  };
+  // const getUserProjects = async () => {
+  //   setIsLoading(true);
+  //   const response = await getProjectsFromUser(user!.email!);
+  //   if (response.kind !== 'ok') {
+  //     setProjects([]);
+  //     setIsLoading(false);
+  //   }
+  //   setProjects(response.data);
+  //   setIsLoading(false);
+  // };
 
   useEffect(() => {
-    let isSuscribed = true;
-    getUserProjects();
-    return () => {
-      isSuscribed = false;
-    };
+    // let isSuscribed = true;
+    // getUserProjects();
+    // return () => {
+    //   isSuscribed = false;
+    // };
+    const unsubscribe = getProjectsOnRealTime(user!.email!).onSnapshot(snap => {
+      const data = snap.docs.map(doc => {
+        return {...doc.data(), uid: doc.id} as ProjectDTO;
+      });
+      setProjects(data);
+    });
+
+    //remember to unsubscribe from your realtime listener on unmount or you will create a memory leak
+    return () => unsubscribe();
   }, []);
 
   return {logout, user, projects, isLoading};

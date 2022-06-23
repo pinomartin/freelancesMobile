@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleProp, View, ViewStyle} from 'react-native';
 import {Button, Card, Text} from '@ui-kitten/components';
 import {getStyles} from './styles';
-import {EvaStatus} from '@ui-kitten/components/devsupport/typings';
+import {EvaSize, EvaStatus} from '@ui-kitten/components/devsupport/typings';
 
 interface Props {
   label: string;
@@ -10,7 +10,11 @@ interface Props {
   headerSubtitle?: string;
   headerRightText?: string;
   primaryButtonLabel?: string;
+  primaryButtonStatus?: EvaStatus;
+  primaryButtonSize?: EvaSize;
   secondaryButtonLabel?: string;
+  secondaryButtonStatus?: EvaStatus;
+  secondaryButtonSize?: EvaSize;
   onPressPrimary?: () => void;
   onPressSecondary?: () => void;
   customStyle?: StyleProp<ViewStyle>;
@@ -30,7 +34,11 @@ export const CustomCard = ({
   onPressPrimary,
   onPressSecondary,
   primaryButtonLabel,
+  primaryButtonStatus = 'primary',
+  primaryButtonSize = 'small',
   secondaryButtonLabel,
+  secondaryButtonStatus = 'basic',
+  secondaryButtonSize = 'small',
   withFooter,
   withHeader,
   status,
@@ -56,8 +64,8 @@ export const CustomCard = ({
       {secondaryButtonLabel && onPressSecondary && (
         <Button
           style={styles.footerControl}
-          size="small"
-          status="basic"
+          size={secondaryButtonSize}
+          status={secondaryButtonStatus}
           onPress={onPressSecondary}>
           {secondaryButtonLabel}
         </Button>
@@ -65,9 +73,9 @@ export const CustomCard = ({
       {onPressPrimary && primaryButtonLabel && (
         <Button
           style={styles.footerControl}
-          size="small"
-          status="primary"
-          onPress={onPressSecondary}>
+          size={primaryButtonSize}
+          status={primaryButtonStatus}
+          onPress={onPressPrimary}>
           {primaryButtonLabel}
         </Button>
       )}

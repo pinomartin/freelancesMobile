@@ -3,7 +3,7 @@ import {CalendarRange} from '@ui-kitten/components/ui/calendar/type';
 import {useContext, useState} from 'react';
 import {Alert} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
-import {addNewProjectToDB} from '../../firebase/firestore/project';
+import {addNewProjectToDB} from '../../firebase/firestore/methods/setters/project';
 import {HOME} from '../../navigation/routes';
 import {
   formatHandler,

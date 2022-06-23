@@ -1,6 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
-import {ProjectDTO} from '../../interfaces/Project';
-import {PROJECTS} from './collections';
+import {ProjectDTO} from '../../../../interfaces/Project';
+import {PROJECTS} from '../../collections';
 
 const getProjectsFromUser = async (userId: string) => {
   try {
@@ -30,6 +30,13 @@ const getProjectByID = async (projectID: string | any) => {
     .get();
   const singleProject = await projectFromDB.data();
   return singleProject;
+};
+
+const getProjectsOnRealTime = (userId: string) => {
+  return firestore()
+    .collection(PROJECTS)
+    .where('userId', '==', userId)
+    .orderBy('creationDate', 'desc');
 };
 
 const streamProject = (projectUID: string, observer: any) => {
@@ -105,4 +112,5 @@ export {
   getAllTasksFromUser,
   streamExpensesFromProject,
   getLastFastBurnDate,
+  getProjectsOnRealTime,
 };

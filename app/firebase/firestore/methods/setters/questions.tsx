@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import {FAQProps} from '../../interfaces/FAQ';
+import {FAQProps} from '../../../../interfaces/FAQ';
 
 const addQuestionHelpToDB = async (question: FAQProps): Promise<any> => {
   try {

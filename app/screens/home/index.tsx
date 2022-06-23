@@ -14,8 +14,7 @@ import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
 import {CustomCard} from '../../components/CustomCard/CustomCard';
 import Loader from '../../components/Loader';
-// import TimerFreelances from '../../components/Timers/TimerFreelances';
-// import {AuthContext} from '../../context/AuthContext';
+import {deleteProject} from '../../firebase/firestore/methods/setters/project';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {NEW_PROJECT, PROFILE, TIMER} from '../../navigation/routes';
 import {getStyles} from './style';
@@ -78,6 +77,8 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
                     withFooter
                     primaryButtonLabel="Ver más"
                     onPressPrimary={() => {}}
+                    onPressSecondary={() => deleteProject(project!.uid!)}
+                    secondaryButtonLabel="Eliminar"
                   />
                 ))}
             </View>
