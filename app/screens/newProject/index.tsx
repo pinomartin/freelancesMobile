@@ -21,6 +21,10 @@ import {HomeNavigationProps} from '../../navigation/interface';
 import {getStyles} from './style';
 import useNewProject from './useNewProject';
 import Loader from '../../components/Loader';
+import {
+  localMoneyFormat,
+  moneyStringFormat,
+} from '../../utils/general/numbersFormatters';
 
 enum PROJECT_BUDGET_TYPE {
   HOUR = 'HOUR',
@@ -39,18 +43,18 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
     amountXHour,
     estimatedHours,
     estimatedTotalBudgetAmount,
+    isLoading,
     setClientName,
     setDescription,
     setEstimatedDates,
-    setEstimatedHours,
-    setEstimatedTotalBudgetAmount,
-    setAmountXHour,
     setName,
     onSubmit,
-    isLoading,
     submitButtonIsDisabled,
     onRadioButtonPress,
     estimatedTotalHourProjectCalculator,
+    amountXHourInputHandler,
+    estimatedTotalBudgetAmountInputHandler,
+    hoursInputHandler,
   } = useNewProject();
 
   const appBarOptions: AppBarProps = {
@@ -102,21 +106,21 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 {flexDirection: 'row', justifyContent: 'space-between'},
               ]}>
               <Input
-                value={amountXHour}
+                value={amountXHour.formatted}
                 label="Monto por hora"
                 size="large"
                 // textStyle={{minHeight: 64}}
-                keyboardType={'numeric'}
+                keyboardType={'number-pad'}
                 placeholder="$0.00"
                 style={{width: '45%'}}
                 // caption={renderCaption}
                 // accessoryRight={renderIcon}
                 // secureTextEntry={secureTextEntry}
 
-                onChangeText={nextValue => setAmountXHour(Number(nextValue))}
+                onChangeText={amountXHourInputHandler}
               />
               <Input
-                value={estimatedHours}
+                value={estimatedHours.formatted}
                 label="Cantidad de horas"
                 size="large"
                 // textStyle={{minHeight: 64}}
@@ -127,7 +131,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 // accessoryRight={renderIcon}
                 // secureTextEntry={secureTextEntry}
 
-                onChangeText={nextValue => setEstimatedHours(Number(nextValue))}
+                onChangeText={hoursInputHandler}
               />
             </View>
             <Text style={{alignSelf: 'center'}}>
@@ -135,7 +139,10 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 <>
                   <Text category={'p2'}>Monto total estimado a cobrar: </Text>
                   <Text status={'primary'} category={'s1'}>
-                    {`$${estimatedTotalHourProjectCalculator()}`}
+                    {`${localMoneyFormat(
+                      estimatedTotalHourProjectCalculator(),
+                      '$',
+                    )}`}
                   </Text>
                 </>
               ) : (
@@ -149,7 +156,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
           <>
             <View style={styles.newProject__input__container}>
               <Input
-                value={estimatedTotalBudgetAmount}
+                value={estimatedTotalBudgetAmount.formatted}
                 label="Monto total estimado"
                 size="large"
                 placeholder="$15000.00"
@@ -157,9 +164,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 // caption={renderCaption}
                 // accessoryRight={renderIcon}
                 // secureTextEntry={secureTextEntry}
-                onChangeText={nextValue =>
-                  setEstimatedTotalBudgetAmount(Number(nextValue))
-                }
+                onChangeText={estimatedTotalBudgetAmountInputHandler}
               />
             </View>
           </>
