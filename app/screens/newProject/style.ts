@@ -28,6 +28,10 @@ export const getStyles = () => {
       marginTop: globalPadding * 2,
       marginBottom: globalPadding,
     },
+    newProject__inputGroup__container: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
     newProject__input__container: {
       marginVertical: globalPadding * 2,
     },

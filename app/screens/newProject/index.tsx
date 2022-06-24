@@ -23,7 +23,7 @@ import useNewProject from './useNewProject';
 import Loader from '../../components/Loader';
 import {
   localMoneyFormat,
-  moneyStringFormat,
+  // moneyStringFormat,
 } from '../../utils/general/numbersFormatters';
 
 enum PROJECT_BUDGET_TYPE {
@@ -43,6 +43,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
     amountXHour,
     estimatedHours,
     estimatedTotalBudgetAmount,
+    hoursPerDay,
     isLoading,
     setClientName,
     setDescription,
@@ -103,7 +104,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
             <View
               style={[
                 styles.newProject__input__container,
-                {flexDirection: 'row', justifyContent: 'space-between'},
+                styles.newProject__inputGroup__container,
               ]}>
               <Input
                 value={amountXHour.formatted}
@@ -154,7 +155,11 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
       case 1:
         return (
           <>
-            <View style={styles.newProject__input__container}>
+            <View
+              style={[
+                styles.newProject__input__container,
+                styles.newProject__inputGroup__container,
+              ]}>
               <Input
                 value={estimatedTotalBudgetAmount.formatted}
                 label="Monto total estimado"
@@ -165,6 +170,21 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 // accessoryRight={renderIcon}
                 // secureTextEntry={secureTextEntry}
                 onChangeText={estimatedTotalBudgetAmountInputHandler}
+              />
+              <Input
+                value={hoursPerDay.formatted}
+                label="Horas por Dia (aprox)"
+                size="large"
+                // textStyle={{minHeight: 64}}
+                maxLength={1}
+                keyboardType={'number-pad'}
+                placeholder="3hs al dia"
+                style={{width: '45%'}}
+                // caption={renderCaption}
+                // accessoryRight={renderIcon}
+                // secureTextEntry={secureTextEntry}
+
+                onChangeText={hoursInputHandler}
               />
             </View>
           </>
@@ -259,7 +279,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 onSelect={nextRange => setEstimatedDates(nextRange)}
                 accessoryRight={<Icon name="calendar" />}
                 label={'* Fecha inicio - * Fecha fin'}
-                caption={'Soy un caption'}
+                // caption={'Soy un caption'}
               />
             </View>
           </Layout>

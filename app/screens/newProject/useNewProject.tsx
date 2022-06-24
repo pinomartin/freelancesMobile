@@ -26,6 +26,7 @@ const useNewProject = () => {
   const [projectType, setProjectType] = useState<number>(0);
   const [amountXHour, setAmountXHour] = useState(AMOUNTS_INITIAL_STATE);
   const [estimatedHours, setEstimatedHours] = useState(AMOUNTS_INITIAL_STATE);
+  const [hoursPerDay, setHoursPerDay] = useState(AMOUNTS_INITIAL_STATE);
   const [estimatedTotalBudgetAmount, setEstimatedTotalBudgetAmount] = useState(
     AMOUNTS_INITIAL_STATE,
   );
@@ -73,10 +74,20 @@ const useNewProject = () => {
 
   const hoursInputHandler = (value: string) => {
     const formatted = onlyNumbers(value);
-    setEstimatedHours({
-      formatted: formatted,
-      realNumber: Number(formatted),
-    });
+    switch (projectType) {
+      case 0:
+        setEstimatedHours({
+          formatted: formatted,
+          realNumber: Number(formatted),
+        });
+        return;
+      case 1:
+        setHoursPerDay({
+          formatted: formatted,
+          realNumber: Number(formatted),
+        });
+        return;
+    }
   };
 
   const onRadioButtonPress = (index: number) => {
@@ -84,6 +95,7 @@ const useNewProject = () => {
     setAmountXHour(AMOUNTS_INITIAL_STATE);
     setEstimatedTotalBudgetAmount(AMOUNTS_INITIAL_STATE);
     setEstimatedHours(AMOUNTS_INITIAL_STATE);
+    setHoursPerDay(AMOUNTS_INITIAL_STATE);
     return;
   };
 
@@ -107,7 +119,7 @@ const useNewProject = () => {
       estimatedFinishDate: estimatedDates!.endDate,
       estimatedHours: estimatedHours.realNumber,
       name: name,
-      estimatedHoursPerDay: 0,
+      estimatedHoursPerDay: hoursPerDay.realNumber,
       estimatedTotal:
         estimatedTotalHourProjectCalculator() > 0
           ? estimatedTotalHourProjectCalculator()
@@ -136,6 +148,7 @@ const useNewProject = () => {
     amountXHour,
     estimatedHours,
     estimatedTotalBudgetAmount,
+    hoursPerDay,
     setClientName,
     setName,
     setDescription,

@@ -110,6 +110,8 @@ const LoginScreen = () => {
             placeholder={'nombre@ejemplo.com'}
             autoCorrect={false}
             size={'large'}
+            keyboardType={'email-address'}
+            textContentType={'emailAddress'}
             status={
               registerError.emailError || loginError.emailError
                 ? 'danger'
@@ -145,7 +147,7 @@ const LoginScreen = () => {
               style={{}}
               disabled={disabledButtonHandler()}
               onPress={() => register(email, pass, () => {})}>
-              Comerzar!
+              Comenzar!
             </Button>
           ) : (
             <Button
