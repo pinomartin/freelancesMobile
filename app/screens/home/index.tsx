@@ -17,14 +17,26 @@ import EmptyState from '../../components/EmptyState/EmptyState';
 import Loader from '../../components/Loader';
 import {deleteProject} from '../../firebase/firestore/methods/setters/project';
 import {HomeNavigationProps} from '../../navigation/interface';
-import {NEW_PROJECT, PROFILE, TIMER} from '../../navigation/routes';
+import {
+  NEW_PROJECT,
+  PROFILE,
+  PROJECT_DATA,
+  TIMER,
+} from '../../navigation/routes';
 import {getStyles} from './style';
 import useHome from './useHome';
 
 const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
-  const {logout, user, projects, isLoading} = useHome();
+  const {
+    logout,
+    user,
+    projects,
+    isLoading,
+    onDeleteProject,
+    onSelectProjectHandler,
+  } = useHome();
 
   const appBarRightMenu = {
     onPressThirdListItem: () => logout(),
@@ -77,8 +89,8 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
                     label={project.description}
                     withFooter
                     primaryButtonLabel="Ver más"
-                    onPressPrimary={() => {}}
-                    onPressSecondary={() => deleteProject(project!.uid!)}
+                    onPressPrimary={() => onSelectProjectHandler(project)}
+                    onPressSecondary={() => onDeleteProject(project!.uid!)}
                     secondaryButtonLabel="Eliminar"
                   />
                 ))

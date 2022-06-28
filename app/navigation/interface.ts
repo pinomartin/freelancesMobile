@@ -11,5 +11,6 @@ export type HomeRoutes = {
   home: undefined;
   profile: undefined;
   timer: undefined;
-  newProject: undefined
+  newProject: undefined;
+  projectData: undefined;
 };

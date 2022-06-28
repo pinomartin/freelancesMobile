@@ -1,3 +1,4 @@
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import {TaskTime} from './tasktime';
 
 export interface ProjectDTO {
@@ -8,7 +9,7 @@ export interface ProjectDTO {
   amountXHour: number;
   estimatedHours: number;
   estimatedTotal: number;
-  creationDate: number;
+  creationDate: FirebaseFirestoreTypes.Timestamp;
   estimatedFinishDate: Date;
   estimatedStartDate: Date;
   estimatedHoursPerDay: number;

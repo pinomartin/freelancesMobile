@@ -1,5 +1,8 @@
 import firestore from '@react-native-firebase/firestore';
-import {CreateProjectPropsRequest, ProjectDTO} from '../../../../interfaces/Project';
+import {
+  CreateProjectPropsRequest,
+  ProjectDTO,
+} from '../../../../interfaces/Project';
 import {TaskTime} from '../../../../interfaces/TaskTime';
 import {finishDateProcessorForm} from '../../../../utils/general/time';
 import {PROJECTS} from '../../collections';
@@ -11,22 +14,24 @@ const addNewProjectToDB = async (
   userID: string | null | undefined, //VER ESTO !!!!
 ) => {
   try {
-    const response = await firestore().collection(PROJECTS).add({
-      userId: userID, //email fron loged USER
-      name: project.name,
-      client: project.client,
-      description: project.description,
-      type: project.type,
-      amountXHour: project.amountXHour,
-      estimatedHours: project.estimatedHours,
-      estimatedTotal: project.estimatedTotal,
-      estimatedStartDate: project.estimatedStartDate,
-      estimatedHoursPerDay: project.estimatedHoursPerDay,
-      estimatedFinishDate: project.estimatedFinishDate,
-      creationDate: new Date(),
-      isDone: false,
-      tasks: [],
-    });
+    const response = await firestore()
+      .collection(PROJECTS)
+      .add({
+        userId: userID, //email fron loged USER
+        name: project.name,
+        client: project.client,
+        description: project.description,
+        type: project.type,
+        amountXHour: project.amountXHour,
+        estimatedHours: project.estimatedHours,
+        estimatedTotal: project.estimatedTotal,
+        estimatedStartDate: project.estimatedStartDate,
+        estimatedHoursPerDay: project.estimatedHoursPerDay,
+        estimatedFinishDate: project.estimatedFinishDate,
+        creationDate: new Date(),
+        isDone: false,
+        tasks: project.tasks ? project.tasks : [],
+      });
     if (response && response.id) {
       return {
         kind: 'ok',
@@ -67,7 +72,7 @@ const updateProjectDataDB = async (project: ProjectDTO, projectUID: string) => {
 };
 
 const deleteProject = async (projectUID: string) => {
-  let response = {};
+  let response = {kind: '', message: '', data: {} as any};
   try {
     await firestore().collection(PROJECTS).doc(projectUID).delete();
     response = {
@@ -79,9 +84,11 @@ const deleteProject = async (projectUID: string) => {
   } catch (error) {
     response = {
       kind: 'error',
-      message: error,
+      message: 'Ocurrió un error al eliminar el proyecto. Intenta nuevamente',
+      data: error,
     };
   }
+  console.log(response, 'RESPONSE DELETE');
   return response;
 };
 

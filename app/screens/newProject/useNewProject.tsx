@@ -4,6 +4,7 @@ import {useContext, useState} from 'react';
 import {Alert} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import {addNewProjectToDB} from '../../firebase/firestore/methods/setters/project';
+// import {getMockedTasks} from '../../mocks/tasks';
 import {HOME} from '../../navigation/routes';
 import {
   formatHandler,
@@ -126,7 +127,7 @@ const useNewProject = () => {
           : estimatedTotalBudgetAmount.realNumber,
       type: projectType,
     };
-    console.log(projectData);
+
     const response = await addNewProjectToDB(projectData, user?.email);
     if (response?.kind !== 'ok') {
       setIsLoading(false);
