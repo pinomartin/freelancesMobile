@@ -1,4 +1,4 @@
-package com.freelancesmobile;
+package com.pinomartin.freelancesmobile;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;

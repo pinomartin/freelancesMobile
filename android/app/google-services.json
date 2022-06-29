@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:973847082955:android:2a70f935ecf7cda457a84e",
         "android_client_info": {
-          "package_name": "com.freelancesmobile"
+          "package_name": "com.pinomartin.freelancesmobile"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "973847082955-4mhcg6pbk63nk7s72c07lnh7nv7c3vej.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.freelancesmobile",
+            "package_name": "com.pinomartin.freelancesmobile",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
         },
