@@ -1,13 +1,18 @@
 import React from 'react';
+import {StyleProp, View, ViewStyle} from 'react-native';
 import {Button, Icon, IconProps, List, ListItem} from '@ui-kitten/components';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {EvaSize} from '@ui-kitten/components/devsupport';
 import {TaskTime} from '../../interfaces/tasktime';
+import {getStyles} from './styles';
 
 interface Props {
   data: any[];
   showScrollBarIndicator?: boolean;
   customContainerStyle?: StyleProp<ViewStyle>;
   listItemMinHeigth?: number;
+  showAccesoryButtons?: boolean;
+  accesoryButtonsSize?: EvaSize;
+  leftIconName?: string;
 }
 
 interface ListItemCustomProps {
@@ -24,25 +29,30 @@ export const TasksList = ({
   showScrollBarIndicator = false,
   customContainerStyle,
   listItemMinHeigth = 88,
+  leftIconName = 'clock-outline',
+  accesoryButtonsSize = 'small',
+  showAccesoryButtons = true,
 }: Props) => {
-  const renderItemAccessory = () => (
-    <View style={{flexDirection: 'row'}}>
+  const styles = getStyles();
+
+  const accessoryButtons = () => (
+    <View style={styles.tasksList__item__container}>
       <Button
-        size="small"
+        size={accesoryButtonsSize}
         status={'warning'}
         accessoryRight={<Icon name="edit-outline" />}
       />
 
-      <View style={{marginHorizontal: 4}} />
+      <View style={styles.tasksList__item__spacing} />
       <Button
-        size="small"
+        size={accesoryButtonsSize}
         status={'danger'}
         accessoryRight={<Icon name="trash" />}></Button>
     </View>
   );
 
   const renderItemIcon = (props: IconProps) => (
-    <Icon {...props} name="clock-outline" />
+    <Icon {...props} name={leftIconName} />
   );
 
   const renderItem = ({item, index}: ListItemCustomProps) => (
@@ -50,7 +60,7 @@ export const TasksList = ({
       title={`${item.hours}hs ${item.minutes}min ${item.seconds}seg`}
       description={`${item.description} ${index + 1}`}
       accessoryLeft={renderItemIcon}
-      accessoryRight={renderItemAccessory}
+      accessoryRight={showAccesoryButtons ? accessoryButtons : undefined}
       style={{minHeight: listItemMinHeigth}}
     />
   );

@@ -15,12 +15,12 @@ import {AppBarProps} from '../../components/AppBar';
 import {CustomCard} from '../../components/CustomCard/CustomCard';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import Loader from '../../components/Loader';
-import {deleteProject} from '../../firebase/firestore/methods/setters/project';
+// import {deleteProject} from '../../firebase/firestore/methods/setters/project';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {
   NEW_PROJECT,
   PROFILE,
-  PROJECT_DATA,
+  // PROJECT_DATA,
   TIMER,
 } from '../../navigation/routes';
 import {getStyles} from './style';
@@ -92,6 +92,7 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
                     onPressPrimary={() => onSelectProjectHandler(project)}
                     onPressSecondary={() => onDeleteProject(project!.uid!)}
                     secondaryButtonLabel="Eliminar"
+                    headerRightText={project.type === 0 ? '🕰️' : '💵'}
                   />
                 ))
               ) : (

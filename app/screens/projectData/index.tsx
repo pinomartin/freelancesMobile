@@ -76,10 +76,10 @@ const ProjectDataScreen = ({
               styles.projectData__globalPadding,
             ]}>
             {projectSelected.tasks && projectSelected.tasks.length > 0 ? (
-              // <TasksList data={} />
+              // <TasksList />
               <TasksList data={projectSelected.tasks} />
             ) : (
-              <Text>Aun no tienes tareas cargadas</Text>
+              <Text>Aún no tienes tareas cargadas</Text>
             )}
           </View>
         </>

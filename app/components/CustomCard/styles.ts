@@ -14,7 +14,9 @@ export const getStyles = (theme?: string) => {
       height: 20,
       width: '15%',
       alignSelf: 'flex-end',
-      backgroundColor: 'red',
+      position: 'absolute',
+      top: 0,
+      right: 0,
     },
     topContainer: {
       flexDirection: 'row',
