@@ -15,6 +15,7 @@ interface Props {
   secondaryButtonLabel?: string;
   secondaryButtonStatus?: EvaStatus;
   secondaryButtonSize?: EvaSize;
+  onPressCard?: () => void;
   onPressPrimary?: () => void;
   onPressSecondary?: () => void;
   customStyle?: StyleProp<ViewStyle>;
@@ -31,6 +32,7 @@ export const CustomCard = ({
   label,
   customStyle,
   customFooterStyle,
+  onPressCard,
   onPressPrimary,
   onPressSecondary,
   primaryButtonLabel,
@@ -87,7 +89,8 @@ export const CustomCard = ({
       style={[styles.card, customStyle]}
       header={withHeader ? Header : undefined}
       footer={withFooter ? Footer : undefined}
-      status={status}>
+      status={status}
+      onPress={onPressCard}>
       <Text>{label}</Text>
     </Card>
   );

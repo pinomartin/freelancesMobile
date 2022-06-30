@@ -15,7 +15,6 @@ import {AppBarProps} from '../../components/AppBar';
 import {CustomCard} from '../../components/CustomCard/CustomCard';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import Loader from '../../components/Loader';
-// import {deleteProject} from '../../firebase/firestore/methods/setters/project';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {
   NEW_PROJECT,
@@ -29,14 +28,7 @@ import useHome from './useHome';
 const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
-  const {
-    logout,
-    user,
-    projects,
-    isLoading,
-    onDeleteProject,
-    onSelectProjectHandler,
-  } = useHome();
+  const {logout, user, projects, isLoading, onSelectProjectHandler} = useHome();
 
   const appBarRightMenu = {
     onPressThirdListItem: () => logout(),
@@ -88,10 +80,9 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
                     withHeader
                     label={project.description}
                     withFooter
-                    primaryButtonLabel="Ver más"
+                    primaryButtonLabel="Ver"
+                    onPressCard={() => onSelectProjectHandler(project)}
                     onPressPrimary={() => onSelectProjectHandler(project)}
-                    onPressSecondary={() => onDeleteProject(project!.uid!)}
-                    secondaryButtonLabel="Eliminar"
                     headerRightText={project.type === 0 ? '🕰️' : '💵'}
                   />
                 ))

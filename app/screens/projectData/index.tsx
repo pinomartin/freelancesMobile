@@ -1,21 +1,23 @@
-import {Layout, Text} from '@ui-kitten/components';
-import React, {useContext, useLayoutEffect} from 'react';
+import {Icon, Layout, Text} from '@ui-kitten/components';
+import React, {useLayoutEffect} from 'react';
 import {View} from 'react-native';
 import {AppBarProps, RightActionsMenuProps} from '../../components/AppBar';
+import ButtonGroup from '../../components/ButtonGroup';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import {TasksList} from '../../components/TasksList';
-import {ProjectContext} from '../../context/ProjectContext';
+import TextTwoLines from '../../components/TextTwoLines';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {getDateFromUNIX, getStringDateFromDate} from '../../utils/general/time';
 import {getStyles} from './style';
+import useProjectData from './useProjectData';
 
 const ProjectDataScreen = ({
   navigation,
   route,
 }: HomeNavigationProps<'projectData'>) => {
   const styles = getStyles();
-  const {projectSelected} = useContext(ProjectContext);
-
+  const {projectSelected, projectTypeUIHandler, onDeleteProject} =
+    useProjectData();
   console.log(projectSelected, 'PROJECT');
 
   const appBarRightMenu: RightActionsMenuProps = {
@@ -37,17 +39,6 @@ const ProjectDataScreen = ({
     renderRightActionsProps: appBarRightMenu,
   };
 
-  const projectTypeUIHandler = () => {
-    switch (projectSelected!.type) {
-      case 0:
-        return 'Por Hora';
-      case 1:
-        return 'Presupuesto Total';
-      default:
-        return '';
-    }
-  };
-
   useLayoutEffect(() => {
     navigation.setOptions({
       //@ts-ignore
@@ -59,16 +50,59 @@ const ProjectDataScreen = ({
     <Layout style={styles.projectData__mainContainer} level={'2'}>
       {projectSelected ? (
         <>
-          <View style={[styles.projectData__globalPadding]}>
-            <Text category={'h5'}>{projectSelected.name}</Text>
-            <Text category={'s2'}>Cliente: {projectSelected.client}</Text>
-            <Text category={'s2'}>
-              Creado:{' '}
-              {getStringDateFromDate(
-                getDateFromUNIX(projectSelected!.creationDate.seconds),
-              )}
-            </Text>
-            <Text category={'p1'}>Tipo: {projectTypeUIHandler()}</Text>
+          <ButtonGroup
+            customStyle={styles.projectData__buttonContainer}
+            firstButton={{
+              iconName: 'bar-chart-2-outline',
+              onPress: () => {},
+              label: '',
+              status: 'primary',
+            }}
+            secondButton={{
+              iconName: 'edit-outline',
+              onPress: () => {},
+              label: '',
+              status: 'warning',
+            }}
+            thirdButton={{
+              iconName: 'trash-2-outline',
+              onPress: () => {
+                onDeleteProject(projectSelected.uid!);
+              },
+              label: '',
+              status: 'danger',
+            }}
+          />
+          <View
+            style={[
+              styles.projectData__globalPadding,
+              styles.projectData__cardElevation,
+            ]}>
+            <View style={styles.projectData__cardContainer}>
+              <TextTwoLines
+                title="Cliente"
+                description={projectSelected.client}
+              />
+              <TextTwoLines
+                title="Creado"
+                description={getStringDateFromDate(
+                  getDateFromUNIX(projectSelected!.creationDate.seconds),
+                )}
+              />
+              <TextTwoLines
+                title="Tipo"
+                description={projectTypeUIHandler().labelType}
+              />
+              <TextTwoLines
+                title={projectTypeUIHandler().labelHour}
+                description={projectTypeUIHandler().hours!}
+              />
+              <TextTwoLines
+                title={'Total estimado'}
+                description={projectTypeUIHandler().total!}
+                isCurrency
+              />
+            </View>
           </View>
           <View
             style={[

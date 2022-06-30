@@ -1,8 +1,5 @@
-// import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import React, {createContext, Dispatch, SetStateAction, useState} from 'react';
 import {ProjectDTO} from '../interfaces/Project';
-// import useLogin from '../firebase/auth/useLogin';
-// import useSignUp from '../firebase/auth/useSignUp';
 
 interface ContextProps {
   projectSelected: ProjectDTO | null;

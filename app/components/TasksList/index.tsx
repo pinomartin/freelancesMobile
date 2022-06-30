@@ -47,7 +47,7 @@ export const TasksList = ({
       <Button
         size={accesoryButtonsSize}
         status={'danger'}
-        accessoryRight={<Icon name="trash" />}></Button>
+        accessoryRight={<Icon name="trash-2-outline" />}></Button>
     </View>
   );
 
