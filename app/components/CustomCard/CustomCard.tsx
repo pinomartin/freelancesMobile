@@ -23,6 +23,7 @@ interface Props {
   withFooter?: boolean;
   withHeader?: boolean;
   status?: EvaStatus;
+  withShadow?: boolean;
 }
 
 export const CustomCard = ({
@@ -44,6 +45,7 @@ export const CustomCard = ({
   withFooter,
   withHeader,
   status,
+  withShadow,
 }: Props) => {
   const styles = getStyles();
 
@@ -85,13 +87,15 @@ export const CustomCard = ({
   );
 
   return (
-    <Card
-      style={[styles.card, customStyle]}
-      header={withHeader ? Header : undefined}
-      footer={withFooter ? Footer : undefined}
-      status={status}
-      onPress={onPressCard}>
-      <Text>{label}</Text>
-    </Card>
+    <View style={withShadow && styles.shadow}>
+      <Card
+        style={[styles.card, customStyle]}
+        header={withHeader ? Header : undefined}
+        footer={withFooter ? Footer : undefined}
+        status={status}
+        onPress={onPressCard}>
+        <Text category={'p1'}>{label}</Text>
+      </Card>
+    </View>
   );
 };

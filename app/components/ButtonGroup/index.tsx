@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Icon} from '@ui-kitten/components';
 import {EvaSize, EvaStatus} from '@ui-kitten/components/devsupport';
 import {StyleProp, View, ViewStyle} from 'react-native';
+import {getStyles} from './styles';
 
 interface ButtonProps {
   label: string;
@@ -25,19 +26,11 @@ const ButtonGroup = ({
   size = 'medium',
   customStyle,
 }: Props) => {
+  const styles = getStyles();
   return (
-    <View
-      style={[
-        {
-          paddingHorizontal: 16,
-          justifyContent: 'center',
-          marginVertical: 8,
-          flexDirection: 'row',
-        },
-        customStyle,
-      ]}>
+    <View style={[styles.buttonGroup__mainContainer, customStyle]}>
       <Button
-        style={[{width: '25%', marginHorizontal: 2}, firstButton.customStyles]}
+        style={[styles.buttonGroup__buttonItem, firstButton.customStyles]}
         accessoryLeft={
           firstButton.iconName ? (
             <Icon name={firstButton.iconName} />
@@ -50,10 +43,7 @@ const ButtonGroup = ({
       </Button>
       {secondButton ? (
         <Button
-          style={[
-            {width: '25%', marginHorizontal: 2},
-            secondButton.customStyles,
-          ]}
+          style={[styles.buttonGroup__buttonItem, secondButton.customStyles]}
           accessoryLeft={
             secondButton.iconName ? (
               <Icon name={secondButton.iconName} />
@@ -67,10 +57,7 @@ const ButtonGroup = ({
       ) : null}
       {thirdButton ? (
         <Button
-          style={[
-            {width: '25%', marginHorizontal: 2},
-            thirdButton.customStyles,
-          ]}
+          style={[styles.buttonGroup__buttonItem, thirdButton.customStyles]}
           accessoryLeft={
             thirdButton.iconName ? (
               <Icon name={thirdButton.iconName} />

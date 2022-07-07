@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import elevations from '../../utils/ui/elevations';
 
 export const getStyles = (theme?: string) => {
   const globalPadding = 8;
@@ -6,9 +7,8 @@ export const getStyles = (theme?: string) => {
   return StyleSheet.create({
     headerContainer: {
       marginVertical: globalPadding,
-      paddingHorizontal: globalPadding * 2,
+      paddingHorizontal: globalPadding * 3,
       flexDirection: 'row',
-      justifyContent: 'space-between',
     },
     header__rightText__container: {
       height: 20,
@@ -17,10 +17,6 @@ export const getStyles = (theme?: string) => {
       position: 'absolute',
       top: 0,
       right: 0,
-    },
-    topContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
     },
     card: {
       minWidth: '90%',
@@ -31,8 +27,11 @@ export const getStyles = (theme?: string) => {
       justifyContent: 'flex-end',
     },
     footerControl: {
-      marginHorizontal: globalPadding,
+      marginHorizontal: globalPadding * 2,
       marginVertical: globalPadding,
+    },
+    shadow: {
+      ...elevations.elevation06,
     },
   });
 };

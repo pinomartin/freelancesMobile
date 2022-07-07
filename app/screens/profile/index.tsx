@@ -7,13 +7,7 @@ import {
   useTheme,
 } from '@ui-kitten/components';
 import React, {useContext, useLayoutEffect} from 'react';
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Image, SafeAreaView, ScrollView, View} from 'react-native';
 import AppBar, {
   AppBarProps,
   RightActionsMenuProps,
@@ -23,10 +17,9 @@ import {HomeNavigationProps} from '../../navigation/interface';
 import {getStyles} from './style';
 
 const ProfileScreen = ({navigation, route}: HomeNavigationProps<'profile'>) => {
-  const isDarkMode = useColorScheme() === 'dark';
   const styles = getStyles();
   const colors = useTheme();
-  const {logout} = useContext(AuthContext);
+  const {logout, user} = useContext(AuthContext);
 
   const appBarRightMenu: RightActionsMenuProps = {
     onPressSecondListItem: () => logout(),
@@ -68,7 +61,7 @@ const ProfileScreen = ({navigation, route}: HomeNavigationProps<'profile'>) => {
                   {borderColor: colors['color-primary-400']},
                 ]}
                 source={{
-                  uri: 'https://previews.123rf.com/images/viaire/viaire1805/viaire180500007/100924446-lindo-perro-kawaii-de-raza-shiba-inu-con-collar-rojo-o-bandana-se-puede-utilizar-para-calcoman%C3%ADas-pa.jpg?fj=1',
+                  uri: 'https://static.wikia.nocookie.net/mamarre-estudios-espanol/images/1/1e/Cheems_usando_un_gorrito_de_rana.jpeg/revision/latest?cb=20201222180634&path-prefix=es',
                 }}
               />
               <Button
@@ -84,7 +77,7 @@ const ProfileScreen = ({navigation, route}: HomeNavigationProps<'profile'>) => {
                 onPress={() => {}}
               />
             </View>
-            <Text category="h5">Martin Pino</Text>
+            <Text category="h5">{user?.email!}</Text>
             <Text category="c2">Desarrollador React Native</Text>
             <Divider />
             <View style={styles.profile__userSpecs__container}>

@@ -10,10 +10,11 @@ import {ProjectDTO} from '../../interfaces/Project';
 import {PROJECT_DATA} from '../../navigation/routes';
 
 const useHome = () => {
-  const [projects, setProjects] = useState<ProjectDTO[]>([]);
+  // const [projects, setProjects] = useState<ProjectDTO[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {logout, user} = useContext(AuthContext);
-  const {setProjectSelected} = useContext(ProjectContext);
+  const {setProjectSelected, userProjects, setUserProjects} =
+    useContext(ProjectContext);
   const {navigate} = useNavigation();
 
   // const getUserProjects = async () => {
@@ -43,7 +44,8 @@ const useHome = () => {
       const data = snap.docs.map(doc => {
         return {...doc.data(), uid: doc.id} as ProjectDTO;
       });
-      setProjects(data);
+      //@ts-ignore
+      setUserProjects(data);
     });
 
     //remember to unsubscribe from your realtime listener on unmount or you will create a memory leak
@@ -53,7 +55,8 @@ const useHome = () => {
   return {
     logout,
     user,
-    projects,
+    // projects,
+    userProjects,
     isLoading,
     onSelectProjectHandler,
   };

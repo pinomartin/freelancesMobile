@@ -13,6 +13,7 @@ export interface Props {
   onPause?: (seconds: number) => void;
   onEnd?: (seconds: number) => void;
   timeWithLabel?: boolean;
+  clearState?: boolean;
 }
 
 let interval: any = null;
@@ -34,6 +35,7 @@ const TimerBackground = React.forwardRef((props: Props, ref) => {
     onPause,
     timeWithLabel = false,
   } = props;
+
 
   useImperativeHandle(ref, () => {
     return {start, pause, resume, stop};
@@ -148,6 +150,7 @@ const TimerBackground = React.forwardRef((props: Props, ref) => {
       interval = null;
     }
   };
+
 
   const font = () => {
     if (fontFamily) {

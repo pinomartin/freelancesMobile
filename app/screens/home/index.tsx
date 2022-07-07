@@ -13,7 +13,7 @@ import React, {useLayoutEffect} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
 import {CustomCard} from '../../components/CustomCard/CustomCard';
-import EmptyState from '../../components/EmptyState/EmptyState';
+import EmptyState, {SVGs} from '../../components/EmptyState/EmptyState';
 import Loader from '../../components/Loader';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {
@@ -28,7 +28,8 @@ import useHome from './useHome';
 const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
-  const {logout, user, projects, isLoading, onSelectProjectHandler} = useHome();
+  const {logout, user, userProjects, isLoading, onSelectProjectHandler} =
+    useHome();
 
   const appBarRightMenu = {
     onPressThirdListItem: () => logout(),
@@ -71,8 +72,8 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
               <Text category={'p1'}>{user?.email ? user?.email : ''} 👋</Text>
             </Text>
             <View style={styles.home__globalSpacing}>
-              {projects && projects.length > 0 ? (
-                projects.map(project => (
+              {userProjects && userProjects.length > 0 ? (
+                userProjects.map(project => (
                   <CustomCard
                     key={project.uid}
                     headerTitle={project.name}
@@ -84,10 +85,12 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
                     onPressCard={() => onSelectProjectHandler(project)}
                     onPressPrimary={() => onSelectProjectHandler(project)}
                     headerRightText={project.type === 0 ? '🕰️' : '💵'}
+                    withShadow
                   />
                 ))
               ) : (
                 <EmptyState
+                  svgIcon={SVGs.PAPERPLANE}
                   title="Aún no tienes proyectos"
                   description="Comenzá creando uno nuevo pulsando sobre el botón + sobre el costado inferior derecho."
                 />
@@ -103,9 +106,6 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
               borderRadius: 80,
               paddingVertical: 20,
               paddingHorizontal: 8,
-              // shadowColor: 'blue',
-              // shadowOpacity: 1,
-              // shadowOffset: {width: 1, height: 0},
             }}
             onPress={() => navigation.navigate(NEW_PROJECT)}
             accessoryLeft={<Icon name="plus-outline" />}

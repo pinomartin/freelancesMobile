@@ -1,9 +1,18 @@
 import React from 'react';
 import {StyleProp, View, ViewStyle} from 'react-native';
-import {Button, Icon, IconProps, List, ListItem} from '@ui-kitten/components';
+import {
+  Button,
+  Icon,
+  IconProps,
+  List,
+  ListItem,
+  Text,
+} from '@ui-kitten/components';
 import {EvaSize} from '@ui-kitten/components/devsupport';
 import {TaskTime} from '../../interfaces/tasktime';
 import {getStyles} from './styles';
+import {secondsToMoney} from '../../utils/money';
+import {convertToDuration} from '../../utils/general/time';
 
 interface Props {
   data: any[];
@@ -13,6 +22,8 @@ interface Props {
   showAccesoryButtons?: boolean;
   accesoryButtonsSize?: EvaSize;
   leftIconName?: string;
+  label?: string;
+  amountEstimated: number;
 }
 
 interface ListItemCustomProps {
@@ -32,6 +43,8 @@ export const TasksList = ({
   leftIconName = 'clock-outline',
   accesoryButtonsSize = 'small',
   showAccesoryButtons = true,
+  label,
+  amountEstimated,
 }: Props) => {
   const styles = getStyles();
 
@@ -57,8 +70,8 @@ export const TasksList = ({
 
   const renderItem = ({item, index}: ListItemCustomProps) => (
     <ListItem
-      title={`${item.hours}hs ${item.minutes}min ${item.seconds}seg`}
-      description={`${item.description} ${index + 1}`}
+      title={convertToDuration(item.seconds)}
+      description={`$${secondsToMoney(item.seconds, amountEstimated)}`}
       accessoryLeft={renderItemIcon}
       accessoryRight={showAccesoryButtons ? accessoryButtons : undefined}
       style={{minHeight: listItemMinHeigth}}
@@ -66,11 +79,18 @@ export const TasksList = ({
   );
 
   return (
-    <List
-      style={[{maxHeight: listItemMinHeigth * 4}, customContainerStyle]}
-      data={data}
-      renderItem={renderItem}
-      showsVerticalScrollIndicator={showScrollBarIndicator}
-    />
+    <>
+      {label ? (
+        <Text category={'s1'} style={styles.tasksList__label}>
+          {label}
+        </Text>
+      ) : null}
+      <List
+        style={[{maxHeight: listItemMinHeigth * 3}, customContainerStyle]}
+        data={data}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={showScrollBarIndicator}
+      />
+    </>
   );
 };

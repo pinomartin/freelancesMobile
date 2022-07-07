@@ -5,7 +5,7 @@ const getStyles = (theme?: string) => {
 
   return StyleSheet.create({
     emptyState__mainContainer: {
-      flex: 1 * 0.8,
+      flex: 0.8,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -19,12 +19,12 @@ const getStyles = (theme?: string) => {
     },
     emptyState__text__title: {
       textAlign: 'center',
-      marginBottom: globalPadding
+      marginBottom: globalPadding,
     },
     emptyState__text__description: {
       textAlign: 'center',
       maxWidth: '90%',
-      lineHeight: globalPadding * 2.5
+      lineHeight: globalPadding * 2.5,
     },
   });
 };

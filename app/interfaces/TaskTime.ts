@@ -3,12 +3,12 @@ export interface TaskTime {
   hours: number;
   minutes: number;
   seconds: number;
-  isActive: boolean;
+  isDone: boolean;
   creationDate: Date;
   startTimerDate: Date;
   stopTimerDate: Date;
   isFastHourCharge?: boolean;
   projectUID?: string;
-  clientUID: string;
+  userUID: string;
   uid?: string;
 }

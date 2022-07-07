@@ -11,21 +11,27 @@ export const getStyles = () => {
       paddingHorizontal: globalPadding * 2,
     },
     projectData__buttonContainer: {
-      marginVertical: globalPadding * 2,
+      marginTop: globalPadding * 2,
     },
-    projectData__cardElevation: {
+    projectData__elevation: {
       ...elevations.elevation08,
     },
     projectData__cardContainer: {
       backgroundColor: 'white',
-      borderWidth: 0.1,
-      paddingVertical: globalPadding,
+      paddingVertical: globalPadding * 2,
       paddingHorizontal: globalPadding,
       borderRadius: globalPadding + 4,
-      overflow: 'visible',
+      marginVertical: globalPadding * 2,
     },
-    projectData__listContainer: {
+    projectData__timerContainer: {
+      alignItems: 'center',
+      marginTop: globalPadding,
+    },
+    projectData__taskListContainer: {
       marginTop: globalPadding * 3,
+    },
+    projectData__taskList: {
+      backgroundColor: 'white',
     },
   });
 };

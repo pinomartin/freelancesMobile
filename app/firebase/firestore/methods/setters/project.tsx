@@ -7,6 +7,12 @@ import {TaskTime} from '../../../../interfaces/TaskTime';
 import {finishDateProcessorForm} from '../../../../utils/general/time';
 import {PROJECTS} from '../../collections';
 
+interface ApiResponse {
+  kind: string;
+  message: string;
+  data: {};
+}
+
 // const COLLECTION__NAME = 'Projects';
 
 const addNewProjectToDB = async (
@@ -116,34 +122,47 @@ const finishProjectDB = async (projectUID: string, finishDate: number) => {
 const addNewTaskTimeToDB = async (
   task: TaskTime,
   project: ProjectDTO,
-): Promise<any> => {
+): Promise<ApiResponse> => {
+  let response = {kind: '', message: '', data: {} as any};
+
   try {
     await firestore()
       .collection(PROJECTS)
       .doc(project.uid)
       .update({
-        ...project,
+        // ...project,
         tasks: [
-          project.tasks,
+          ...project!.tasks!,
           {
             description: task.description,
             hours: task.hours,
             minutes: task.minutes,
             seconds: task.seconds,
-            creationDate: task.creationDate,
+            creationDate: new Date(),
             startTimerDate: task.startTimerDate,
             stopTimerDate: task.stopTimerDate,
-            isDone: task.isActive,
+            isDone: task.isDone,
             isFastHourCharge: task.isFastHourCharge,
             projectUID: task.projectUID,
-            userUID: task.clientUID,
+            userUID: task.userUID,
             uid: 'id' + Math.random().toString(16).slice(2),
           },
         ],
       });
+    response = {
+      kind: 'ok',
+      message: 'Tarea guardada correctamente',
+      data: task,
+    };
   } catch (error) {
     console.log('No se puede guardar tarea en DB');
+    response = {
+      kind: 'error',
+      message: 'Ocurrió un error al guardar la tarea. Intenta nuevamente',
+      data: error,
+    };
   }
+  return response;
 };
 
 const updateTask = async (task: TaskTime, taskUID: string) => {
