@@ -138,6 +138,7 @@ const addNewTaskTimeToDB = async (
             hours: task.hours,
             minutes: task.minutes,
             seconds: task.seconds,
+            secondsFromDate: task.secondsFromDate,
             creationDate: new Date(),
             startTimerDate: task.startTimerDate,
             stopTimerDate: task.stopTimerDate,

@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import {useContext, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Keyboard} from 'react-native';
+import {AuthContext} from '../../context/AuthContext';
 import {ProjectContext} from '../../context/ProjectContext';
 import {
   addNewTaskTimeToDB,
@@ -8,14 +9,13 @@ import {
 } from '../../firebase/firestore/methods/setters/project';
 import {HOME} from '../../navigation/routes';
 import {getDifferenceInSeconds} from '../../utils/general/time';
-import useHome from '../home/useHome';
 
 const TASK__INITIAL__STATE = {
   description: '',
   hours: 0,
   minutes: 0,
   seconds: 0,
-  secondsByDate: 0,
+  secondsFromDate: 0,
   creationDate: new Date(),
   startTimerDate: new Date(),
   stopTimerDate: new Date(),
@@ -27,7 +27,7 @@ const TASK__INITIAL__STATE = {
 
 const useProjectData = () => {
   const {projectSelected, setProjectSelected} = useContext(ProjectContext);
-  const {user} = useHome();
+  const {user} = useContext(AuthContext);
 
   const [taskData, setTaskData] = useState(TASK__INITIAL__STATE);
   const [showData, setShowData] = useState(false);
@@ -35,6 +35,7 @@ const useProjectData = () => {
     useState(false);
   const [showModal, setShowModal] = useState(false);
   const [resetTimer, setResetTimer] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {navigate} = useNavigation();
 
@@ -64,6 +65,9 @@ const useProjectData = () => {
   const showDataHandler = () => {
     setShowData(!showData);
   };
+  const showModalHandler = () => {
+    setShowModal(!showModal);
+  };
 
   const taskDescriptionSetter = (e: string) => {
     setTaskData({...taskData, description: e});
@@ -88,12 +92,11 @@ const useProjectData = () => {
   };
 
   const onSaveTimePress = () => {
-    console.log('time');
     setTaskData({
       ...taskData,
       projectUID: projectSelected?.uid!,
       isDone: true,
-      secondsByDate: getDifferenceInSeconds(
+      secondsFromDate: getDifferenceInSeconds(
         taskData.stopTimerDate,
         taskData.startTimerDate,
         'trunc',
@@ -101,20 +104,20 @@ const useProjectData = () => {
       userUID: user?.email!,
     });
     setShowModal(true);
-    // if (taskData.description && taskData.isDone) {
-    //   console.log('entre al IF !!!!!');
-    //   await addNewTaskTimeToDB(taskData, projectSelected!);
-    // }
+    Keyboard.dismiss();
   };
 
   const saveTimeonDB = async () => {
+    showModalHandler();
+    setIsLoading(true);
     const response = await addNewTaskTimeToDB(taskData, projectSelected!);
-    setShowModal(false);
     if (response.kind !== 'ok') {
+      setIsLoading(false);
       Alert.alert('Ocurrio un error', response?.message);
       return;
     }
     if (response.kind === 'ok') {
+      setIsLoading(false);
       Alert.alert('Tarea guardada :)', response.message);
       setProjectSelected({
         ...projectSelected,
@@ -159,12 +162,14 @@ const useProjectData = () => {
     onStopTimer,
     onSaveTimePress,
     showDataHandler,
+    showModalHandler,
     showTaskDescriptionInput,
     taskDescriptionSetter,
     showData,
     showModal,
     saveTimeonDB,
     resetTimer,
+    isLoading
   };
 };
 

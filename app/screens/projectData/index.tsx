@@ -9,10 +9,16 @@ import TextTwoLines from '../../components/TextTwoLines';
 import TimerFreelances from '../../components/Timers/TimerFreelances';
 import EmptyTimerSvg from '../../components/EmptyState/Timer/TimerSvg';
 import {HomeNavigationProps} from '../../navigation/interface';
-import {getDateFromUNIX, getStringDateFromDate} from '../../utils/general/time';
+import {
+  convertToDuration,
+  getDateFromUNIX,
+  getStringDateFromDate,
+} from '../../utils/general/time';
 import {getStyles} from './style';
 import useProjectData from './useProjectData';
 import {ModalWithBackdrop} from '../../components/Modal';
+import Loader from '../../components/Loader';
+import {secondsToMoney} from '../../utils/money';
 
 const ProjectDataScreen = ({
   navigation,
@@ -33,8 +39,10 @@ const ProjectDataScreen = ({
     showModal,
     saveTimeonDB,
     showDataHandler,
+    showModalHandler,
     showTaskDescriptionInput,
     resetTimer,
+    isLoading,
   } = useProjectData();
   const colors = useTheme();
 
@@ -66,7 +74,9 @@ const ProjectDataScreen = ({
     });
   }, [navigation, route]);
 
-  return (
+  return isLoading ? (
+    <Loader isFullScreen />
+  ) : (
     <Layout style={styles.projectData__mainContainer} level={'2'}>
       {projectSelected ? (
         <>
@@ -202,9 +212,18 @@ const ProjectDataScreen = ({
       )}
       <ModalWithBackdrop
         isVisible={showModal}
-        label="estas seguro?"
+        title="Tarea"
+        label={`Tiempo: ${convertToDuration(taskData.secondsFromDate)}`}
+        description={`Descripcion: ${taskData.description}`}
+        altDescription={`Monto: $${secondsToMoney(
+          taskData.secondsFromDate,
+          projectSelected?.amountXHour!,
+        )}`}
         primaryButtonLabel="Guardar"
         onPressPrimary={saveTimeonDB}
+        onPressSecondary={showModalHandler}
+        secondaryButtonLabel={'Cancelar'}
+        onBackdropPress={showModalHandler}
       />
       {/* <ModalCustom isVisible={showModal} /> */}
     </Layout>

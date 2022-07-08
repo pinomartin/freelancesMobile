@@ -3,6 +3,7 @@ export interface TaskTime {
   hours: number;
   minutes: number;
   seconds: number;
+  secondsFromDate: number;
   isDone: boolean;
   creationDate: Date;
   startTimerDate: Date;

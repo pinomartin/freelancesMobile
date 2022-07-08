@@ -70,8 +70,8 @@ export const TasksList = ({
 
   const renderItem = ({item, index}: ListItemCustomProps) => (
     <ListItem
-      title={convertToDuration(item.seconds)}
-      description={`$${secondsToMoney(item.seconds, amountEstimated)}`}
+      title={convertToDuration(item.secondsFromDate)}
+      description={`$${secondsToMoney(item.secondsFromDate, amountEstimated)}`}
       accessoryLeft={renderItemIcon}
       accessoryRight={showAccesoryButtons ? accessoryButtons : undefined}
       style={{minHeight: listItemMinHeigth}}
