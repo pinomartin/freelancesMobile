@@ -23,6 +23,39 @@ const addUserToDB = async (email: string, uid: string) => {
   }
 };
 
+// const updateUserProfilePhoto = async (userEmail:string, updatedImage:any) => {
+
+//   try {
+//       const imgRef = await storage.ref().child(userEmail).child('Profile Photo');
+//       await imgRef.put(updatedImage);
+//       const imgURL = await imgRef.getDownloadURL(); 
+
+//       console.log(imgURL)
+
+//       await db.collection("users").doc(userEmail).update({
+//         profilePhotoURL: imgURL
+//       });
+//       return imgURL;
+
+//   } catch (error) {
+//       console.log(error, "No se pudo guardar nueva foto de perfil")
+//   }
+
+// };
+
+const updateUserName = async (name:string, userEmail:string) => {
+  try {
+    await firestore().collection(COLLECTION__NAME).doc(userEmail).update({
+      userName: name
+    });
+
+    return name;
+    
+  } catch (error) {
+      console.log(error, "No se pudo actualizar el nombre de Usuario");
+  }
+}
 
 
-export {getUserByID, addUserToDB};
+
+export {getUserByID, addUserToDB, updateUserName};

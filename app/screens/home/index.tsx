@@ -9,20 +9,27 @@
  */
 
 import {Button, Icon, Layout, Text, useTheme} from '@ui-kitten/components';
-import React, {useContext, useLayoutEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
 import {CustomCard} from '../../components/CustomCard/CustomCard';
-import TimerFreelances from '../../components/Timers/TimerFreelances';
-import {AuthContext} from '../../context/AuthContext';
+import EmptyState, {SVGs} from '../../components/EmptyState/EmptyState';
+import Loader from '../../components/Loader';
 import {HomeNavigationProps} from '../../navigation/interface';
-import {NEW_PROJECT, PROFILE, TIMER} from '../../navigation/routes';
+import {
+  NEW_PROJECT,
+  PROFILE,
+  // PROJECT_DATA,
+  TIMER,
+} from '../../navigation/routes';
 import {getStyles} from './style';
+import useHome from './useHome';
 
 const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
-  const {logout, user} = useContext(AuthContext);
+  const {logout, user, userProjects, isLoading, onSelectProjectHandler} =
+    useHome();
 
   const appBarRightMenu = {
     onPressThirdListItem: () => logout(),
@@ -51,7 +58,9 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
     });
   }, [navigation, route]);
 
-  return (
+  return isLoading ? (
+    <Loader isFullScreen />
+  ) : (
     <Layout style={styles.home__mainContainer} level={'2'}>
       <SafeAreaView style={styles.home__safeAreaView}>
         <ScrollView
@@ -63,17 +72,29 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
               <Text category={'p1'}>{user?.email ? user?.email : ''} 👋</Text>
             </Text>
             <View style={styles.home__globalSpacing}>
-              <CustomCard
-                headerTitle="Wolfcox"
-                headerSubtitle="Desarrollo web"
-                withHeader
-                label={
-                  'loren ipsum loren ipsum loren ipsumloren ipsum loren ipsum loren ipsum loren ipsum'
-                }
-                withFooter
-                primaryButtonLabel="Ver"
-                onPressPrimary={() => {}}
-              />
+              {userProjects && userProjects.length > 0 ? (
+                userProjects.map(project => (
+                  <CustomCard
+                    key={project.uid}
+                    headerTitle={project.name}
+                    headerSubtitle={project.client}
+                    withHeader
+                    label={project.description}
+                    withFooter
+                    primaryButtonLabel="Ver"
+                    onPressCard={() => onSelectProjectHandler(project)}
+                    onPressPrimary={() => onSelectProjectHandler(project)}
+                    headerRightText={project.type === 0 ? '🕰️' : '💵'}
+                    withShadow
+                  />
+                ))
+              ) : (
+                <EmptyState
+                  svgIcon={SVGs.PAPERPLANE}
+                  title="Aún no tienes proyectos"
+                  description="Comenzá creando uno nuevo pulsando sobre el botón + sobre el costado inferior derecho."
+                />
+              )}
             </View>
           </Layout>
         </ScrollView>
@@ -85,9 +106,6 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
               borderRadius: 80,
               paddingVertical: 20,
               paddingHorizontal: 8,
-              // shadowColor: 'blue',
-              // shadowOpacity: 1,
-              // shadowOffset: {width: 1, height: 0},
             }}
             onPress={() => navigation.navigate(NEW_PROJECT)}
             accessoryLeft={<Icon name="plus-outline" />}

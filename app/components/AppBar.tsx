@@ -55,11 +55,20 @@ const AppBar = ({
   const isDarkMode = useColorScheme() === 'dark';
   const [menuVisible, setMenuVisible] = useState(false);
 
+  const ICON__FILL__COLOR = colors['color-info-500'];
+  const VERTICALPOINTSICON__FILL__COLOR = colors['color-info-500'];
+
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
   };
 
-  const MenuIcon = (props: any) => <Icon {...props} name="more-vertical" />;
+  const MenuIcon = (props: any) => (
+    <Icon
+      {...props}
+      name="more-vertical"
+      fill={VERTICALPOINTSICON__FILL__COLOR}
+    />
+  );
 
   const renderIcon = (props: any, name: string) => (
     <Icon {...props} name={name} />
@@ -92,7 +101,7 @@ const AppBar = ({
         <MenuItem
           accessoryLeft={
             firstListItemIconName ? (
-              <Icon name={firstListItemIconName} />
+              <Icon name={firstListItemIconName} fill={ICON__FILL__COLOR} />
             ) : undefined
           }
           title={firstListItemLabel}
@@ -102,7 +111,7 @@ const AppBar = ({
         <MenuItem
           accessoryLeft={
             secondListItemIconName ? (
-              <Icon name={secondListItemIconName} />
+              <Icon name={secondListItemIconName} fill={ICON__FILL__COLOR} />
             ) : undefined
           }
           title={secondListItemLabel}
@@ -113,14 +122,16 @@ const AppBar = ({
           <MenuItem
             accessoryLeft={
               thirdListItemIconName ? (
-                <Icon name={thirdListItemIconName} />
+                <Icon name={thirdListItemIconName} fill={ICON__FILL__COLOR} />
               ) : undefined
             }
             title={thirdListItemLabel}
             onPressOut={toggleMenu}
             onPress={onPressThirdListItem}
           />
-        ) : (<></>)}
+        ) : (
+          <></>
+        )}
       </OverflowMenu>
     </>
   );
@@ -137,12 +148,12 @@ const AppBar = ({
           <TopNavigationAction
             icon={
               iconLeft ? (
-                renderIcon('', iconLeft)
+                renderIcon({fill: ICON__FILL__COLOR}, iconLeft)
               ) : (
                 <PaperPlaneLogo
                   width={30}
                   height={30}
-                  borderColor={colors['color-primary-default']}
+                  borderColor={ICON__FILL__COLOR}
                 />
               )
             }
@@ -154,7 +165,11 @@ const AppBar = ({
             renderRightActions({...renderRightActionsProps})
           ) : (
             <TopNavigationAction
-              icon={iconRight ? renderIcon('', iconRight) : undefined}
+              icon={
+                iconRight
+                  ? renderIcon({fill: ICON__FILL__COLOR}, iconRight)
+                  : undefined
+              }
               onPress={onRightIconPress}
             />
           )

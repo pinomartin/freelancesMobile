@@ -11,6 +11,7 @@ export const getStyles = () => {
     },
     newProject__scrollView: {
       flexGrow: 1,
+      paddingBottom: globalPadding * 3,
     },
     newProject__container: {
       flex: 1,
@@ -24,7 +25,12 @@ export const getStyles = () => {
       textAlign: 'center',
     },
     newProject__submitButton__container: {
+      marginTop: globalPadding * 2,
       marginBottom: globalPadding,
+    },
+    newProject__inputGroup__container: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
     newProject__input__container: {
       marginVertical: globalPadding * 2,

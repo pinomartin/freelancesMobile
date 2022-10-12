@@ -1,48 +1,65 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {
-  Button,
-  Card,
-  CardProps,
-  Icon,
-  Layout,
-  Text,
-} from '@ui-kitten/components';
+import {StyleProp, View, ViewStyle} from 'react-native';
+import {Button, Card, Text} from '@ui-kitten/components';
 import {getStyles} from './styles';
+import {EvaSize, EvaStatus} from '@ui-kitten/components/devsupport/typings';
 
 interface Props {
   label: string;
   headerTitle: string;
   headerSubtitle?: string;
+  headerRightText?: string;
   primaryButtonLabel?: string;
+  primaryButtonStatus?: EvaStatus;
+  primaryButtonSize?: EvaSize;
   secondaryButtonLabel?: string;
+  secondaryButtonStatus?: EvaStatus;
+  secondaryButtonSize?: EvaSize;
+  onPressCard?: () => void;
   onPressPrimary?: () => void;
   onPressSecondary?: () => void;
   customStyle?: StyleProp<ViewStyle>;
   customFooterStyle?: StyleProp<ViewStyle>;
   withFooter?: boolean;
   withHeader?: boolean;
+  status?: EvaStatus;
+  withShadow?: boolean;
 }
 
 export const CustomCard = ({
   headerTitle,
+  headerSubtitle,
+  headerRightText,
   label,
   customStyle,
   customFooterStyle,
-  headerSubtitle,
+  onPressCard,
   onPressPrimary,
   onPressSecondary,
   primaryButtonLabel,
+  primaryButtonStatus = 'primary',
+  primaryButtonSize = 'small',
   secondaryButtonLabel,
+  secondaryButtonStatus = 'basic',
+  secondaryButtonSize = 'small',
   withFooter,
   withHeader,
+  status,
+  withShadow,
 }: Props) => {
   const styles = getStyles();
 
   const Header = () => (
     <View style={styles.headerContainer}>
-      <Text category="h6">{headerTitle}</Text>
-      {headerSubtitle ? <Text category="s1">{headerSubtitle}</Text> : null}
+      <View>
+        <Text category="h6">{headerTitle}</Text>
+        {headerSubtitle ? <Text category="s1">{headerSubtitle}</Text> : null}
+      </View>
+      {headerRightText ? (
+        <View style={styles.header__rightText__container}>
+          <Text>{headerRightText}</Text>
+        </View>
+      ) : null}
     </View>
   );
 
@@ -51,8 +68,8 @@ export const CustomCard = ({
       {secondaryButtonLabel && onPressSecondary && (
         <Button
           style={styles.footerControl}
-          size="small"
-          status="basic"
+          size={secondaryButtonSize}
+          status={secondaryButtonStatus}
           onPress={onPressSecondary}>
           {secondaryButtonLabel}
         </Button>
@@ -60,9 +77,9 @@ export const CustomCard = ({
       {onPressPrimary && primaryButtonLabel && (
         <Button
           style={styles.footerControl}
-          size="small"
-          status="primary"
-          onPress={onPressSecondary}>
+          size={primaryButtonSize}
+          status={primaryButtonStatus}
+          onPress={onPressPrimary}>
           {primaryButtonLabel}
         </Button>
       )}
@@ -70,13 +87,15 @@ export const CustomCard = ({
   );
 
   return (
-    <React.Fragment>
+    <View style={withShadow && styles.shadow}>
       <Card
         style={[styles.card, customStyle]}
         header={withHeader ? Header : undefined}
-        footer={withFooter ? Footer : undefined}>
-        <Text>{label}</Text>
+        footer={withFooter ? Footer : undefined}
+        status={status}
+        onPress={onPressCard}>
+        <Text category={'p1'}>{label}</Text>
       </Card>
-    </React.Fragment>
+    </View>
   );
 };

@@ -15,7 +15,7 @@ const PaperPlaneLogo = ({
   height = 100,
   color = 'transparent',
   containerStyles,
-  borderColor = '#a47dff',
+  borderColor = 'blue', //61dafb a47dff
 }: PaperPlaneProps) => {
   return (
     <View style={containerStyles}>

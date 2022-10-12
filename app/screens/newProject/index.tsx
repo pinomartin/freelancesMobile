@@ -2,21 +2,29 @@
  * @format
  */
 
-import React, {useContext, useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {
   Button,
+  Icon,
   Input,
   Layout,
   Radio,
   RadioGroup,
+  RangeDatepicker,
   Text,
   useTheme,
 } from '@ui-kitten/components';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
-import {AuthContext} from '../../context/AuthContext';
+// import {AuthContext} from '../../context/AuthContext';
 import {HomeNavigationProps} from '../../navigation/interface';
 import {getStyles} from './style';
+import useNewProject from './useNewProject';
+import Loader from '../../components/Loader';
+import {
+  localMoneyFormat,
+  // moneyStringFormat,
+} from '../../utils/general/numbersFormatters';
 
 enum PROJECT_BUDGET_TYPE {
   HOUR = 'HOUR',
@@ -26,11 +34,29 @@ enum PROJECT_BUDGET_TYPE {
 const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
-  const {logout} = useContext(AuthContext);
-  const [name, setName] = useState<string>('');
-  const [clientName, setClientName] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [projectType, setProjectType] = useState<number | undefined>(undefined);
+  const {
+    clientName,
+    description,
+    estimatedDates,
+    name,
+    projectType,
+    amountXHour,
+    estimatedHours,
+    estimatedTotalBudgetAmount,
+    hoursPerDay,
+    isLoading,
+    setClientName,
+    setDescription,
+    setEstimatedDates,
+    setName,
+    onSubmit,
+    submitButtonIsDisabled,
+    onRadioButtonPress,
+    estimatedTotalHourProjectCalculator,
+    amountXHourInputHandler,
+    estimatedTotalBudgetAmountInputHandler,
+    hoursInputHandler,
+  } = useNewProject();
 
   const appBarOptions: AppBarProps = {
     title: 'Nuevo Proyecto',
@@ -58,7 +84,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
     );
   };
 
-  const typeBudgetHandler = () => {
+  const typeBudgetLabelHandler = () => {
     switch (projectType) {
       case 0:
         return 'Defines un precio por hora y cantidad de horas estimadas de trabajo.';
@@ -70,7 +96,108 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
     }
   };
 
-  return (
+  const typeBudgetRenderUIHandler = () => {
+    switch (projectType) {
+      case 0:
+        return (
+          <>
+            <View
+              style={[
+                styles.newProject__input__container,
+                styles.newProject__inputGroup__container,
+              ]}>
+              <Input
+                value={amountXHour.formatted}
+                label="Monto por hora"
+                size="large"
+                // textStyle={{minHeight: 64}}
+                keyboardType={'number-pad'}
+                placeholder="$0.00"
+                style={{width: '45%'}}
+                // caption={renderCaption}
+                // accessoryRight={renderIcon}
+                // secureTextEntry={secureTextEntry}
+
+                onChangeText={amountXHourInputHandler}
+              />
+              <Input
+                value={estimatedHours.formatted}
+                label="Cantidad de horas"
+                size="large"
+                // textStyle={{minHeight: 64}}
+                keyboardType={'number-pad'}
+                placeholder="20hs"
+                style={{width: '45%'}}
+                // caption={renderCaption}
+                // accessoryRight={renderIcon}
+                // secureTextEntry={secureTextEntry}
+
+                onChangeText={hoursInputHandler}
+              />
+            </View>
+            <Text style={{alignSelf: 'center'}}>
+              {estimatedTotalHourProjectCalculator() !== 0 ? (
+                <>
+                  <Text category={'p2'}>Monto total estimado a cobrar: </Text>
+                  <Text status={'primary'} category={'s1'}>
+                    {`${localMoneyFormat(
+                      estimatedTotalHourProjectCalculator(),
+                      '$',
+                    )}`}
+                  </Text>
+                </>
+              ) : (
+                ''
+              )}
+            </Text>
+          </>
+        );
+      case 1:
+        return (
+          <>
+            <View
+              style={[
+                styles.newProject__input__container,
+                styles.newProject__inputGroup__container,
+              ]}>
+              <Input
+                value={estimatedTotalBudgetAmount.formatted}
+                label="Monto total estimado"
+                size="large"
+                placeholder="$15000.00"
+                keyboardType={'numeric'}
+                // caption={renderCaption}
+                // accessoryRight={renderIcon}
+                // secureTextEntry={secureTextEntry}
+                onChangeText={estimatedTotalBudgetAmountInputHandler}
+              />
+              <Input
+                value={hoursPerDay.formatted}
+                label="Horas por Dia (aprox)"
+                size="large"
+                // textStyle={{minHeight: 64}}
+                maxLength={1}
+                keyboardType={'number-pad'}
+                placeholder="3hs al dia"
+                style={{width: '45%'}}
+                // caption={renderCaption}
+                // accessoryRight={renderIcon}
+                // secureTextEntry={secureTextEntry}
+
+                onChangeText={hoursInputHandler}
+              />
+            </View>
+          </>
+        );
+
+      default:
+        return;
+    }
+  };
+
+  return isLoading ? (
+    <Loader color={'primary'} isFullScreen />
+  ) : (
     <Layout style={styles.newProject__mainContainer} level={'2'}>
       <SafeAreaView style={styles.newProject__safeAreaView}>
         <ScrollView
@@ -88,6 +215,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 label="Nombre"
                 size="large"
                 placeholder="Ej: Freelances app"
+                textContentType="name"
                 // caption={renderCaption}
                 // accessoryRight={renderIcon}
                 // secureTextEntry={secureTextEntry}
@@ -100,6 +228,7 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 label="Cliente"
                 size="large"
                 placeholder="Ej: Estudio Grafica Digital"
+                textContentType="organizationName"
                 // caption={renderCaption}
                 // accessoryRight={renderIcon}
                 // secureTextEntry={secureTextEntry}
@@ -123,13 +252,14 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
             <View style={[styles.newProject__input__container]}>
               <Text
                 category={'s1'}
+                status={'basic'}
                 style={{alignSelf: 'center', marginBottom: 8}}>
                 Tipo de Presupuesto
               </Text>
               <RadioGroup
                 style={{flexDirection: 'row', justifyContent: 'space-around'}}
                 selectedIndex={projectType}
-                onChange={(index: number) => setProjectType(index)}>
+                onChange={onRadioButtonPress}>
                 <Radio status={'info'}>Por Hora 🕰️</Radio>
                 <Radio status={'info'}>Monto Total 💵</Radio>
               </RadioGroup>
@@ -138,9 +268,19 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                   category={'p2'}
                   status={'basic'}
                   style={styles.newProject__centerAlignment}>
-                  {`*${typeBudgetHandler()}*`}
+                  {`*${typeBudgetLabelHandler()}*`}
                 </Text>
               </View>
+              {typeBudgetRenderUIHandler()}
+            </View>
+            <View>
+              <RangeDatepicker
+                range={estimatedDates}
+                onSelect={nextRange => setEstimatedDates(nextRange)}
+                accessoryRight={<Icon name="calendar" />}
+                label={'* Fecha inicio - * Fecha fin'}
+                // caption={'Soy un caption'}
+              />
             </View>
           </Layout>
         </ScrollView>
@@ -149,7 +289,9 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
             styles.newProject__submitButton__container,
             styles.newProject__globalSpacing,
           ]}>
-          <Button disabled={false}>Crear</Button>
+          <Button disabled={submitButtonIsDisabled()} onPress={onSubmit}>
+            Crear
+          </Button>
         </View>
       </SafeAreaView>
     </Layout>

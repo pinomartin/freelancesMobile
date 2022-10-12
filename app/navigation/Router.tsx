@@ -1,12 +1,11 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {
-  NavigationContainer,
-} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import AuthStack from './stacks/AuthStack';
 import HomeStack from './stacks/HomeStack';
 import {AuthContext} from '../context/AuthContext';
 import Loader from '../components/Loader';
+import {ProjectProvider} from '../context/ProjectContext';
 
 interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
@@ -32,7 +31,13 @@ export default function Router(props: NavigationProps) {
   }
   return (
     <NavigationContainer {...props}>
-      {user ? <HomeStack /> : <AuthStack />}
+      {user ? (
+        <ProjectProvider>
+          <HomeStack />
+        </ProjectProvider>
+      ) : (
+        <AuthStack />
+      )}
     </NavigationContainer>
   );
 }
