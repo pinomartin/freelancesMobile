@@ -10,16 +10,13 @@ export const getStyles = () => {
     projectData__globalPadding: {
       paddingHorizontal: globalPadding * 2,
     },
-    projectData__buttonContainer: {
-      marginTop: globalPadding * 2,
-    },
     projectData__elevation: {
       ...elevations.elevation08,
     },
     projectData__cardContainer: {
       backgroundColor: 'white',
       paddingVertical: globalPadding * 2,
-      paddingHorizontal: globalPadding,
+      paddingHorizontal: globalPadding * 2,
       borderRadius: globalPadding + 4,
       marginVertical: globalPadding * 2,
     },
@@ -32,6 +29,15 @@ export const getStyles = () => {
     },
     projectData__taskList: {
       backgroundColor: 'white',
+    },
+    projectData__emptyStateContainer:{
+      paddingTop: 30,
+    },
+    projectData__bottomButtonContainer: {
+      position: 'absolute',
+      bottom: '5%',
+      width: '90%',
+      alignSelf: 'center',
     },
   });
 };

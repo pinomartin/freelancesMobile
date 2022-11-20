@@ -243,6 +243,8 @@ const NewProjectScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
                 multiline={true}
                 textStyle={{minHeight: 64}}
                 placeholder="Ej: Freelances app"
+                //Fix - prevents new line on enter key press
+                blurOnSubmit={true}
                 // caption={renderCaption}
                 // accessoryRight={renderIcon}
                 // secureTextEntry={secureTextEntry}

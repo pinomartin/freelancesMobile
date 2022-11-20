@@ -15,7 +15,7 @@ export const getStyles = (theme?: string) => {
       width: '15%',
       alignSelf: 'flex-end',
       position: 'absolute',
-      top: 0,
+      top: '25%',
       right: 0,
     },
     card: {

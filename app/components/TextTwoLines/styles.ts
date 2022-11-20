@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native"
 export const getStyles = () => {
     return StyleSheet.create({
         textItem:{
-            marginVertical: 1,
+            marginVertical: 2,
         }
     })
 }

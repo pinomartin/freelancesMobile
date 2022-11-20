@@ -1,14 +1,15 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../../screens/home';
-import {HOME, NEW_PROJECT, PROFILE, PROJECT_DATA, TIMER} from '../routes';
+import {EDIT_PROJECT, HELP, HOME, NEW_PROJECT, PROFILE, PROJECT_DATA} from '../routes';
 import ProfileScreen from '../../screens/profile';
 import {StatusBar, useColorScheme} from 'react-native';
 import AppBar from '../../components/AppBar';
 import {HomeRoutes} from '../interface';
-import TimerScreen from '../../screens/timer';
 import NewProjectScreen from '../../screens/newProject';
 import ProjectDataScreen from '../../screens/projectData';
+import HelpScreen from '../../screens/help';
+import ProjectEditionScreen from '../../screens/projectEdition';
 
 const Stack = createStackNavigator<HomeRoutes>();
 
@@ -36,9 +37,10 @@ export default function HomeStack() {
       }}>
       <Stack.Screen name={HOME} component={HomeScreen} />
       <Stack.Screen name={PROFILE} component={ProfileScreen} />
-      <Stack.Screen name={TIMER} component={TimerScreen} />
+      <Stack.Screen name={HELP} component={HelpScreen} />
       <Stack.Screen name={NEW_PROJECT} component={NewProjectScreen} />
       <Stack.Screen name={PROJECT_DATA} component={ProjectDataScreen} />
+      <Stack.Screen name={EDIT_PROJECT} component={ProjectEditionScreen} />
     </Stack.Navigator>
   );
 }

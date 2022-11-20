@@ -12,8 +12,8 @@ const TextTwoLines = ({title, description, isCurrency = false}: Props) => {
 
   return (
     <Text style={styles.textItem}>
-      <Text category={'s2'}>{title}: </Text>
-      <Text category={'p1'}>
+      <Text category={'s1'}>{title}: </Text>
+      <Text category={'p2'}>
         {isCurrency ? '$' : ''}
         {description}
       </Text>

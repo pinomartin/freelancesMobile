@@ -20,7 +20,7 @@ import {
   NEW_PROJECT,
   PROFILE,
   // PROJECT_DATA,
-  TIMER,
+  HELP,
 } from '../../navigation/routes';
 import {getStyles} from './style';
 import useHome from './useHome';
@@ -33,13 +33,13 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
 
   const appBarRightMenu = {
     onPressThirdListItem: () => logout(),
-    onPressSecondListItem: () => navigation.push(TIMER),
+    onPressSecondListItem: () => navigation.push(HELP),
     onPressFirstListItem: () => navigation.push(PROFILE),
     firstListItemLabel: 'Mi Perfil',
     firstListItemIconName: 'person-outline',
-    secondListItemLabel: 'Tiempos',
+    secondListItemLabel: 'Ayuda',
     thirdListItemLabel: 'Cerrar Sesión',
-    secondListItemIconName: 'clock-outline',
+    secondListItemIconName: 'question-mark-circle-outline',
     thirdListItemIconName: 'log-out',
   };
 
@@ -102,11 +102,7 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
           <Button
             status="info"
             size={'giant'}
-            style={{
-              borderRadius: 80,
-              paddingVertical: 20,
-              paddingHorizontal: 8,
-            }}
+            style={styles.home__fabButton}
             onPress={() => navigation.navigate(NEW_PROJECT)}
             accessoryLeft={<Icon name="plus-outline" />}
           />

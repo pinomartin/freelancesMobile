@@ -26,5 +26,10 @@ export const getStyles = () => {
       bottom: globalPadding * 6,
       right: globalPadding * 2,
     },
+    home__fabButton: {
+      borderRadius: globalPadding * 10,
+      paddingVertical: globalPadding * 2 + 4,
+      paddingHorizontal: globalPadding,
+    },
   });
 };

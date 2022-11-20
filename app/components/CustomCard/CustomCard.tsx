@@ -6,6 +6,7 @@ import {EvaSize, EvaStatus} from '@ui-kitten/components/devsupport/typings';
 
 interface Props {
   label: string;
+  labelLinesNumber?: number;
   headerTitle: string;
   headerSubtitle?: string;
   headerRightText?: string;
@@ -31,6 +32,7 @@ export const CustomCard = ({
   headerSubtitle,
   headerRightText,
   label,
+  labelLinesNumber = 2,
   customStyle,
   customFooterStyle,
   onPressCard,
@@ -94,7 +96,9 @@ export const CustomCard = ({
         footer={withFooter ? Footer : undefined}
         status={status}
         onPress={onPressCard}>
-        <Text category={'p1'}>{label}</Text>
+        <Text category={'p1'} numberOfLines={labelLinesNumber}>
+          {label}
+        </Text>
       </Card>
     </View>
   );

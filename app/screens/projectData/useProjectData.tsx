@@ -7,6 +7,7 @@ import {
   addNewTaskTimeToDB,
   deleteProject,
 } from '../../firebase/firestore/methods/setters/project';
+import {TaskTime} from '../../interfaces/tasktime';
 import {HOME} from '../../navigation/routes';
 import {getDifferenceInSeconds} from '../../utils/general/time';
 
@@ -129,6 +130,10 @@ const useProjectData = () => {
     }
   };
 
+  const onTaskListItemPress = (item: TaskTime) => {
+    console.log(item);
+  };
+
   // console.log(timerData);
 
   const onDeleteProject = async (id: string) => {
@@ -169,7 +174,8 @@ const useProjectData = () => {
     showModal,
     saveTimeonDB,
     resetTimer,
-    isLoading
+    isLoading,
+    onTaskListItemPress,
   };
 };
 

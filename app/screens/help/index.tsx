@@ -12,28 +12,28 @@ import {Layout, useTheme} from '@ui-kitten/components';
 import React, {useContext, useLayoutEffect} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
-import TimerFreelances from '../../components/Timers/TimerFreelances';
+// import TimerFreelances from '../../components/Timers/TimerFreelances';
 import {AuthContext} from '../../context/AuthContext';
 import {HomeNavigationProps} from '../../navigation/interface';
-import {PROFILE, TIMER} from '../../navigation/routes';
+// import {PROFILE} from '../../navigation/routes';
 import {getStyles} from './style';
 
-const TimerScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
+const HelpScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
   const colors = useTheme();
   const styles = getStyles();
   const {logout} = useContext(AuthContext);
 
   const appBarRightMenu = {
     onPressThirdListItem: () => logout(),
-    onPressFirstListItem: () => navigation.push(PROFILE),
-    firstListItemLabel: 'Mi Perfil',
-    firstListItemIconName: 'person-outline',
+    onPressFirstListItem: () => navigation.popToTop(),
+    firstListItemLabel: 'Home',
+    firstListItemIconName: 'home-outline',
     secondListItemLabel: 'Cerrar Sesión',
     secondListItemIconName: 'log-out',
   };
 
   const appBarOptions: AppBarProps = {
-    title: 'Tiempos',
+    title: 'Ayuda',
     alignment: 'start',
     rightMenu: true,
     customStyle: {backgroundColor: colors['$color-basic-100']},
@@ -54,15 +54,11 @@ const TimerScreen = ({navigation, route}: HomeNavigationProps<'home'>) => {
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           contentContainerStyle={styles.home__scrollView}>
-          <Layout style={styles.home__container} level={'2'}>
-            {/* <Text>Hola</Text> */}
-            <TimerFreelances />
-            {/* <TimerBackground /> */}
-          </Layout>
+         
         </ScrollView>
       </SafeAreaView>
     </Layout>
   );
 };
 
-export default TimerScreen;
+export default HelpScreen;

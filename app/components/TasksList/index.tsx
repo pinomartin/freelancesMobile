@@ -24,6 +24,7 @@ interface Props {
   leftIconName?: string;
   label?: string;
   amountEstimated: number;
+  onPressListItem?: (item: TaskTime) => void;
 }
 
 interface ListItemCustomProps {
@@ -37,7 +38,7 @@ const mockData = new Array(8).fill({
 
 export const TasksList = ({
   data = mockData,
-  showScrollBarIndicator = false,
+  showScrollBarIndicator = true,
   customContainerStyle,
   listItemMinHeigth = 88,
   leftIconName = 'clock-outline',
@@ -45,6 +46,7 @@ export const TasksList = ({
   showAccesoryButtons = true,
   label,
   amountEstimated,
+  onPressListItem,
 }: Props) => {
   const styles = getStyles();
 
@@ -70,11 +72,13 @@ export const TasksList = ({
 
   const renderItem = ({item, index}: ListItemCustomProps) => (
     <ListItem
+      key={index.toString()}
       title={convertToDuration(item.secondsFromDate)}
       description={`$${secondsToMoney(item.secondsFromDate, amountEstimated)}`}
       accessoryLeft={renderItemIcon}
       accessoryRight={showAccesoryButtons ? accessoryButtons : undefined}
       style={{minHeight: listItemMinHeigth}}
+      onPress={() => onPressListItem && onPressListItem(item)}
     />
   );
 

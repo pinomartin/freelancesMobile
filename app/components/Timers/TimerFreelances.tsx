@@ -1,7 +1,8 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Button, Icon, Text} from '@ui-kitten/components';
 import TimerBackground from './TimerBackground';
+import elevations from '../../utils/ui/elevations';
 
 interface Props {
   label?: string;
@@ -25,6 +26,7 @@ const TimerFreelances = ({
   //REVISAR ESTO SI ES NECESARIO O NO ESE useCallback
   const resetTimerFromAbove = useCallback(() => {
     if (resetTimer) {
+      //@ts-ignore =>  added because the stop() function
       timerRef.current && timerRef.current.stop();
       setIsRunning(false);
       setHasStartButtonPressed(false);
@@ -63,7 +65,12 @@ const TimerFreelances = ({
       <View style={styles.timerFree__buttonsBar__container}>
         {!isRunning && !hasStartButtonPressed && (
           <Button
-            style={{width: '50%'}}
+            style={[
+              {
+                width: '50%',
+              },
+              elevations.elevation04,
+            ]}
             status={'success'}
             accessoryLeft={<Icon name="play-circle" />}
             onPress={() => {
@@ -78,6 +85,7 @@ const TimerFreelances = ({
         {hasStartButtonPressed && isRunning && (
           <View style={styles.timerFree__button__container}>
             <Button
+              style={elevations.elevation04}
               status={'primary'}
               size={'medium'}
               accessoryLeft={<Icon name="stop-circle-outline" />}
@@ -146,7 +154,15 @@ const TimerFreelances = ({
           </View>
         )} */}
         {hasStartButtonPressed && (
-          <View style={styles.timerFree__resetButton__container}>
+          <View
+            style={[
+              isRunning
+                ? [
+                    styles.timerFree__resetButton__container,
+                    styles.timerFree__resetButton__running,
+                  ]
+                : [styles.timerFree__resetButton__container],
+            ]}>
             <Button
               accessoryLeft={<Icon name="refresh-outline" />}
               status={'basic'}
@@ -192,8 +208,12 @@ const styles = StyleSheet.create({
   },
   timerFree__resetButton__container: {
     position: 'absolute',
-    bottom: '140%',
+    bottom: globalSpacing * 2.2,
     left: '95%',
+  },
+  timerFree__resetButton__running: {
+    bottom: globalSpacing * 8,
+    alignSelf: 'center',
   },
   timerFree__resetButton: {
     borderRadius: globalSpacing * 3,

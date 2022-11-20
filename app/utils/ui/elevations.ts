@@ -1,7 +1,8 @@
 import {StyleSheet} from 'react-native';
 
 const colors = {
-  elevation: 'rgb(72, 95, 127)',
+  elevation: '#000',
+  // elevation: 'rgb(72, 95, 127)',
 };
 const elevations = StyleSheet.create({
   elevation02: {

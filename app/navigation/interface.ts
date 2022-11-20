@@ -10,7 +10,8 @@ export type HomeRoutes = {
   login: undefined;
   home: undefined;
   profile: undefined;
-  timer: undefined;
+  help: undefined;
   newProject: undefined;
   projectData: undefined;
+  editProject: undefined;
 };

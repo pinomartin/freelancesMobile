@@ -6,9 +6,19 @@ export const getStyles = () => {
   return StyleSheet.create({
     buttonGroup__mainContainer: {
       paddingHorizontal: globalPadding * 2,
+      paddingVertical: globalPadding * 2,
       justifyContent: 'space-evenly',
-      marginVertical: globalPadding,
       flexDirection: 'row',
+      backgroundColor: 'white',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+
+      elevation: 4,
     },
     buttonGroup__buttonItem: {
       width: '23%',
