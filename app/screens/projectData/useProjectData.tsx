@@ -10,6 +10,7 @@ import {
 import {TaskTime} from '../../interfaces/tasktime';
 import {HOME} from '../../navigation/routes';
 import {getDifferenceInSeconds} from '../../utils/general/time';
+import {showToast} from '../../utils/toastNotis';
 
 const TASK__INITIAL__STATE = {
   description: '',
@@ -149,6 +150,11 @@ const useProjectData = () => {
           if (response.kind === 'ok') {
             Alert.alert('Exito :) !!!', response.message);
             navigate(HOME as never);
+            showToast({
+              type: 'success',
+              title: 'Exito :)',
+              subtitle: response.message,
+            });
             return;
           }
         },

@@ -21,6 +21,7 @@ import {
   PROFILE,
   // PROJECT_DATA,
   HELP,
+  TEST_SCREEN,
 } from '../../navigation/routes';
 import {getStyles} from './style';
 import useHome from './useHome';
@@ -71,6 +72,8 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
               <Text category={'h6'}>Bienvenido</Text>{' '}
               <Text category={'p1'}>{user?.email ? user?.email : ''} 👋</Text>
             </Text>
+            <Text category="s1">Mis proyectos</Text>
+            <Button onPress={() => navigation.push(TEST_SCREEN)}> ANIMATIONS </Button>
             <View style={styles.home__globalSpacing}>
               {userProjects && userProjects.length > 0 ? (
                 userProjects.map(project => (
@@ -86,6 +89,7 @@ const Home = ({navigation, route}: HomeNavigationProps<'home'>) => {
                     onPressPrimary={() => onSelectProjectHandler(project)}
                     headerRightText={project.type === 0 ? '🕰️' : '💵'}
                     withShadow
+                    customStyle={styles.home__cardSpacing}
                   />
                 ))
               ) : (

@@ -10,6 +10,7 @@ import {
   formatHandler,
   onlyNumbers,
 } from '../../utils/general/numbersFormatters';
+import {showToast} from '../../utils/toastNotis';
 
 const AMOUNTS_INITIAL_STATE = {
   realNumber: 0,
@@ -137,6 +138,11 @@ const useNewProject = () => {
     }
     setIsLoading(false);
     navigate(HOME as never);
+    showToast({
+      type: 'success',
+      title: 'Felicitaciones!',
+      subtitle: 'Proyecto creado exitosamente!',
+    });
     console.log(response, 'RESPONSE Success projectCreated');
   };
 

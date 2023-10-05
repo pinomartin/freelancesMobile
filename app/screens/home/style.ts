@@ -21,6 +21,7 @@ export const getStyles = () => {
       paddingHorizontal: globalPadding * 2,
       marginVertical: globalPadding * 2,
     },
+    home__cardSpacing: {marginVertical: globalPadding},
     home__fabButton__container: {
       position: 'absolute',
       bottom: globalPadding * 6,

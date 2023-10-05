@@ -4,8 +4,8 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import AuthStack from './stacks/AuthStack';
 import HomeStack from './stacks/HomeStack';
 import {AuthContext} from '../context/AuthContext';
-import Loader from '../components/Loader';
 import {ProjectProvider} from '../context/ProjectContext';
+import Loader from '../components/Loader';
 
 interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}

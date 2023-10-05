@@ -14,4 +14,5 @@ export type HomeRoutes = {
   newProject: undefined;
   projectData: undefined;
   editProject: undefined;
+  testScreen: undefined;
 };

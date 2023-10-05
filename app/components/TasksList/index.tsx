@@ -25,6 +25,8 @@ interface Props {
   label?: string;
   amountEstimated: number;
   onPressListItem?: (item: TaskTime) => void;
+  onPressAccesoryPrimaryButton?: () => void;
+  onPressAccesorySecondaryButton?: () => void;
 }
 
 interface ListItemCustomProps {
@@ -47,6 +49,8 @@ export const TasksList = ({
   label,
   amountEstimated,
   onPressListItem,
+  onPressAccesoryPrimaryButton,
+  onPressAccesorySecondaryButton,
 }: Props) => {
   const styles = getStyles();
 
@@ -56,13 +60,16 @@ export const TasksList = ({
         size={accesoryButtonsSize}
         status={'warning'}
         accessoryRight={<Icon name="edit-outline" />}
+        onPress={onPressAccesoryPrimaryButton}
       />
 
       <View style={styles.tasksList__item__spacing} />
       <Button
         size={accesoryButtonsSize}
         status={'danger'}
-        accessoryRight={<Icon name="trash-2-outline" />}></Button>
+        accessoryRight={<Icon name="trash-2-outline" />}
+        onPress={onPressAccesorySecondaryButton}
+      />
     </View>
   );
 

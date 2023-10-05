@@ -7,12 +7,6 @@ interface ContextProps {
   setUserProjects: Dispatch<SetStateAction<null>>;
   clearProjectState: () => void;
   userProjects: ProjectDTO[] | null;
-  // isLoading: boolean;
-  // login: (email: string, password: string, callback: () => void) => void;
-  // register: (email: string, password: string, callback: () => void) => void;
-  // logout: () => void;
-  // loginError: {emailError: string; passwordError: string};
-  // registerError: {emailError: string; passwordError: string};
 }
 
 export const ProjectContext = createContext({} as ContextProps);
@@ -25,10 +19,6 @@ export const ProjectProvider = ({children}: any) => {
     setProjectSelected(null);
     setUserProjects(null);
   };
-  // const {signInWithEmailAndPassword, signOut, isLoading, loginError} =
-  //   useLogin();
-  // const {createAccountWithEmail, isRegisterLoading, registerError} =
-  //   useSignUp();
 
   return (
     <ProjectContext.Provider

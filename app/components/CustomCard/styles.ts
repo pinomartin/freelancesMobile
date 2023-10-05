@@ -33,5 +33,6 @@ export const getStyles = (theme?: string) => {
     shadow: {
       ...elevations.elevation06,
     },
+    labelContainer: {height: 40, justifyContent: 'center'},
   });
 };

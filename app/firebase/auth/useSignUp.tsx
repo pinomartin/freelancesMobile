@@ -1,4 +1,4 @@
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {addUserToDB} from '../firestore/users';
 

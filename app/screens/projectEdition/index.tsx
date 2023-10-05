@@ -19,23 +19,12 @@ import {
 import React, {useContext, useLayoutEffect} from 'react';
 import {SafeAreaView, ScrollView, View} from 'react-native';
 import {AppBarProps} from '../../components/AppBar';
-// import {CustomCard} from '../../components/CustomCard/CustomCard';
 import EmptyState, {SVGs} from '../../components/EmptyState/EmptyState';
 import Loader from '../../components/Loader';
 import {AuthContext} from '../../context/AuthContext';
-import {ProjectDTO} from '../../interfaces/Project';
-// import {ProjectContext} from '../../context/ProjectContext';
 import {HomeNavigationProps} from '../../navigation/interface';
-import useNewProject from '../newProject/useNewProject';
-// import {
-//   NEW_PROJECT,
-//   PROFILE,
-//   // PROJECT_DATA,
-//   HELP,
-// } from '../../navigation/routes';
 import {getStyles} from './style';
 import useProjectEdition from './useProjectEdition';
-// import useHome from './useHome';
 
 const ProjectEditionScreen = ({
   navigation,

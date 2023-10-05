@@ -1,7 +1,15 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../../screens/home';
-import {EDIT_PROJECT, HELP, HOME, NEW_PROJECT, PROFILE, PROJECT_DATA} from '../routes';
+import {
+  EDIT_PROJECT,
+  HELP,
+  HOME,
+  NEW_PROJECT,
+  PROFILE,
+  PROJECT_DATA,
+  TEST_SCREEN,
+} from '../routes';
 import ProfileScreen from '../../screens/profile';
 import {StatusBar, useColorScheme} from 'react-native';
 import AppBar from '../../components/AppBar';
@@ -10,6 +18,7 @@ import NewProjectScreen from '../../screens/newProject';
 import ProjectDataScreen from '../../screens/projectData';
 import HelpScreen from '../../screens/help';
 import ProjectEditionScreen from '../../screens/projectEdition';
+import TestAninationsScreen from '../../screens/tests';
 
 const Stack = createStackNavigator<HomeRoutes>();
 
@@ -41,6 +50,9 @@ export default function HomeStack() {
       <Stack.Screen name={NEW_PROJECT} component={NewProjectScreen} />
       <Stack.Screen name={PROJECT_DATA} component={ProjectDataScreen} />
       <Stack.Screen name={EDIT_PROJECT} component={ProjectEditionScreen} />
+      {/* TESTS SCREEN  */}
+      <Stack.Screen name={TEST_SCREEN} component={TestAninationsScreen} />
+      {/* TESTS SCREEN  */}
     </Stack.Navigator>
   );
 }

@@ -1,26 +1,32 @@
 import React, {useLayoutEffect} from 'react';
-import {SafeAreaView, ScrollView, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {Button, Icon, Input, Layout, useTheme} from '@ui-kitten/components';
 import {AppBarProps, RightActionsMenuProps} from '../../components/AppBar';
+import Animated, {
+  FadeIn,
+  FadeOut,
+  FadeOutDown,
+  FadeOutUp,
+  SlideInDown,
+  SlideInUp,
+  SlideOutDown,
+  SlideOutUp,
+} from 'react-native-reanimated';
+import {isEmpty} from 'lodash';
 import ButtonGroup from '../../components/ButtonGroup';
 import EmptyState, {SVGs} from '../../components/EmptyState/EmptyState';
 import {TasksList} from '../../components/TasksList';
-import TextTwoLines from '../../components/TextTwoLines';
 import TimerFreelances from '../../components/Timers/TimerFreelances';
 import EmptyTimerSvg from '../../components/EmptyState/Timer/TimerSvg';
 import Loader from '../../components/Loader';
 import {ModalWithBackdrop} from '../../components/Modal';
+import DetailScrollCard from '../../components/DetailScrollCard';
 import {HomeNavigationProps} from '../../navigation/interface';
-import {
-  convertToDuration,
-  getDateFromUNIX,
-  getStringDateFromDate,
-} from '../../utils/general/time';
-import {getStyles} from './style';
+import {convertToDuration} from '../../utils/general/time';
 import useProjectData from './useProjectData';
 import {secondsToMoney} from '../../utils/money';
-import { EDIT_PROJECT } from '../../navigation/routes';
-import { isEmpty } from 'lodash';
+import {EDIT_PROJECT} from '../../navigation/routes';
+import {getStyles} from './style';
 
 const ProjectDataScreen = ({
   navigation,
@@ -107,44 +113,18 @@ const ProjectDataScreen = ({
               }}
             />
             {showData ? (
-              <View
-                style={[
-                  styles.projectData__globalPadding,
-                  styles.projectData__elevation,
-                ]}>
-                <ScrollView
-                  style={[
-                    styles.projectData__cardContainer,
-                    {
-                      backgroundColor: colors['background-basic-color-1'],
-                    },
-                  ]}
-                  showsVerticalScrollIndicator>
-                  <TextTwoLines
-                    title="Cliente"
-                    description={projectSelected.client}
-                  />
-                  <TextTwoLines
-                    title="Creado"
-                    description={getStringDateFromDate(
-                      getDateFromUNIX(projectSelected!.creationDate.seconds),
-                    )}
-                  />
-                  <TextTwoLines
-                    title="Tipo"
-                    description={projectTypeUIHandler().labelType}
-                  />
-                  <TextTwoLines
-                    title={projectTypeUIHandler().labelHour}
-                    description={projectTypeUIHandler().hours!}
-                  />
-                  <TextTwoLines
-                    title={'Total estimado'}
-                    description={projectTypeUIHandler().total!}
-                    isCurrency
-                  />
-                </ScrollView>
-              </View>
+              <Animated.View
+                entering={SlideInDown.duration(200)}
+                exiting={FadeOut}>
+                <DetailScrollCard
+                  client={projectSelected.client}
+                  date={projectSelected.creationDate.seconds}
+                  type={projectTypeUIHandler().labelType}
+                  hours={projectTypeUIHandler().hours!}
+                  hourLabel={projectTypeUIHandler().labelHour!}
+                  totalAmount={projectTypeUIHandler().total!}
+                />
+              </Animated.View>
             ) : null}
             <View style={styles.projectData__timerContainer}>
               <TimerFreelances
@@ -156,7 +136,7 @@ const ProjectDataScreen = ({
                 // onSavePress={e => onSaveTimePress(e)}
               />
               {showTaskDescriptionInput ? (
-                <View style={{width: '90%'}}>
+                <Animated.View entering={FadeIn} style={{width: '90%'}}>
                   <Input
                     value={taskData.description}
                     label="Qué hiciste en este tiempo ?"
@@ -175,9 +155,10 @@ const ProjectDataScreen = ({
                     status={'info'}
                     disabled={!taskData.description}
                     accessoryLeft={<Icon name="save-outline" />}
-                    onPress={onSaveTimePress}
-                  />
-                </View>
+                    onPress={onSaveTimePress}>
+                    Guardar tarea
+                  </Button>
+                </Animated.View>
               ) : null}
             </View>
             <View
@@ -197,17 +178,24 @@ const ProjectDataScreen = ({
                     amountEstimated={projectSelected.amountXHour}
                     showScrollBarIndicator
                     onPressListItem={onTaskListItemPress}
+                    // TODO -> Add functionality to this task item buttons
+                    onPressAccesoryPrimaryButton={() =>
+                      console.log('edit button')
+                    }
+                    onPressAccesorySecondaryButton={() =>
+                      console.log('delete button')
+                    }
                   />
                 </>
               ) : (
                 <View style={styles.projectData__emptyStateContainer}>
-                <EmptyTimerSvg
-                  width={80}
-                  height={80}
-                  title={'Aún no tienes tareas cargadas'}
-                  description={'Utiliza el contador para registrarlas'}
+                  <EmptyTimerSvg
+                    width={80}
+                    height={80}
+                    title={'Aún no tienes tareas cargadas'}
+                    description={'Utiliza el contador para registrarlas'}
                   />
-                  </View>
+                </View>
               )}
             </View>
           </>
@@ -219,7 +207,7 @@ const ProjectDataScreen = ({
           />
         )}
         <View style={styles.projectData__bottomButtonContainer}>
-          <Button status={'info'}>Finalizar proyecto</Button>
+          <Button status={'success'}>Finalizar proyecto</Button>
         </View>
         <ModalWithBackdrop
           isVisible={showModal}

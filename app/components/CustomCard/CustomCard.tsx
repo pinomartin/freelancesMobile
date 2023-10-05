@@ -96,9 +96,11 @@ export const CustomCard = ({
         footer={withFooter ? Footer : undefined}
         status={status}
         onPress={onPressCard}>
-        <Text category={'p1'} numberOfLines={labelLinesNumber}>
-          {label}
-        </Text>
+        <View style={styles.labelContainer}>
+          <Text category={'p1'} numberOfLines={labelLinesNumber}>
+            {label}
+          </Text>
+        </View>
       </Card>
     </View>
   );

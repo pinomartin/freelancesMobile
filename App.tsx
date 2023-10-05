@@ -9,15 +9,15 @@
  */
 
 import React from 'react';
-
 // import * as storage from './app/utils/storage';
-
-export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
+import {useColorScheme} from 'react-native';
 import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import Toast from 'react-native-toast-message';
 import Providers from './app/navigation';
-import {useColorScheme} from 'react-native';
+
+export const NAVIGATION_PERSISTENCE_KEY = 'NAVIGATION_STATE';
 
 const App = () => {
   const colorScheme = useColorScheme();
@@ -34,6 +34,7 @@ const App = () => {
       theme={colorScheme === 'dark' ? eva.dark : eva.light}>
       <IconRegistry icons={EvaIconsPack} />
       <Providers />
+      <Toast />
     </ApplicationProvider>
   );
 };
